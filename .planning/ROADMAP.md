@@ -13,7 +13,7 @@ A structured 5-phase execution roadmap taking "Trưa Nay Ăn Gì" from an empty 
 - [x] **Phase 1: Foundation, Database & Seed Data** - Bootstrap Next.js 16, Tailwind v4, Turso/Drizzle schema, ported dataset seed, and root layout with Be Vietnam Pro font.
 - [x] **Phase 2: Core Public Experience & Spin Engine** - Public landing, category & budget filters, random selection engine, dish result card, atomic global spin counter, and `/dishes` library.
 - [x] **Phase 3: 4 Animated Picker Modes & Visual Redesign** - Implement Roulette Wheel, Card Shuffle + Flip, Slot Reel, and Ngẫu hứng modes with Motion and clean minimal styling.
-- [ ] **Phase 4: Browser Personalization & Fun Extras** - Offline localStorage custom dish lists ("Hòm của tôi"), Quẻ trưa daily fortune card, Duyên vị, Khui vị, and static pages.
+- [x] **Phase 4: Browser Personalization & Fun Extras** - Offline localStorage custom dish lists ("Hòm của tôi"), Quẻ trưa daily fortune card, Duyên vị, Khui vị, and static pages.
 - [ ] **Phase 5: Admin CMS & Content Management** - Better Auth email/password login, dish/category CRUD with Vercel Blob image upload, fortune editor, and settings management.
 
 ## Phase Details
@@ -86,9 +86,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 04-01: LocalStorage custom dish list manager ("Hòm của tôi") with custom spin toggle.
-- [ ] 04-02: Quẻ trưa daily fortune card draw page with shareable text.
-- [ ] 04-03: Duyên vị, Khui vị discovery pages and static Privacy/Terms pages.
+- [x] 04-01: LocalStorage custom dish list manager ("Hòm của tôi") with custom spin toggle.
+- [x] 04-02: Quẻ trưa daily fortune card draw page with shareable text.
+- [x] 04-03: Duyên vị, Khui vị discovery pages and static Privacy/Terms pages.
 
 ### Phase 5: Admin CMS & Content Management
 **Goal**: Deliver a secure administrative CMS with Better Auth email/password login, dish & category CRUD with Vercel Blob image upload, fortune editor, and site settings.
@@ -118,5 +118,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. Foundation, Database & Seed Data | 3/3 | Complete | 2026-09-13 |
 | 2. Core Public Experience & Spin Engine | 3/3 | Complete | 2026-09-13 |
 | 3. 4 Animated Picker Modes & Visual Redesign | 3/3 | Complete | 2026-09-13 |
-| 4. Browser Personalization & Fun Extras | 0/3 | Not started | - |
+| 4. Browser Personalization & Fun Extras | 3/3 | Complete | 2026-09-13 |
 | 5. Admin CMS & Content Management | 0/3 | Not started | - |

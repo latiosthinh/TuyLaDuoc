@@ -43,18 +43,18 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Local Custom Lists (CUST)
 
-- [ ] **CUST-01**: User can view and manage a personal custom dish list ("Hòm của tôi") saved in localStorage
-- [ ] **CUST-02**: User can add custom dish names, prices, and categories to their personal list
-- [ ] **CUST-03**: User can delete or edit items in their personal custom list
-- [ ] **CUST-04**: User can toggle spinning exclusively from their personal list or from the global system list
-- [ ] **CUST-05**: Custom list operations work 100% offline and anonymously without requiring user accounts
+- [x] **CUST-01**: User can view and manage a personal custom dish list ("Hòm của tôi") saved in localStorage
+- [x] **CUST-02**: User can add custom dish names, prices, and categories to their personal list
+- [x] **CUST-03**: User can delete or edit items in their personal custom list
+- [x] **CUST-04**: User can toggle spinning exclusively from their personal list or from the global system list
+- [x] **CUST-05**: Custom list operations work 100% offline and anonymously without requiring user accounts
 
 ### Fun Extras & Secondary Pages (EXTR)
 
-- [ ] **EXTR-01**: User can draw a daily lunch fortune slip on `/que-trua` (Quẻ trưa) with shareable fortune text
-- [ ] **EXTR-02**: User can explore flavor compatibility on `/duyen-vi` (Duyên vị)
-- [ ] **EXTR-03**: User can experience a mystery dish unlock on `/khui-vi` (Khui vị)
-- [ ] **EXTR-04**: User can access standard static information pages: Privacy (`/privacy`), Terms (`/terms`), Contact
+- [x] **EXTR-01**: User can draw a daily lunch fortune slip on `/que-trua` (Quẻ trưa) with shareable fortune text
+- [x] **EXTR-02**: User can explore flavor compatibility on `/duyen-vi` (Duyên vị)
+- [x] **EXTR-03**: User can experience a mystery dish unlock on `/khui-vi` (Khui vị)
+- [x] **EXTR-04**: User can access standard static information pages: Privacy (`/privacy`), Terms (`/terms`), Contact
 - [x] **EXTR-05**: Public footer prominently displays data source and inspiration credit to `truanayangi.com`
 
 ### Admin CMS & Authentication (CMS)
@@ -125,15 +125,15 @@ Which phases cover which requirements. Populated during roadmap creation.
 | STAT-01 | Phase 2 | Complete |
 | STAT-02 | Phase 2 | Complete |
 | STAT-03 | Phase 2 | Complete |
-| CUST-01 | Phase 4 | Pending |
-| CUST-02 | Phase 4 | Pending |
-| CUST-03 | Phase 4 | Pending |
-| CUST-04 | Phase 4 | Pending |
-| CUST-05 | Phase 4 | Pending |
-| EXTR-01 | Phase 4 | Pending |
-| EXTR-02 | Phase 4 | Pending |
-| EXTR-03 | Phase 4 | Pending |
-| EXTR-04 | Phase 4 | Pending |
+| CUST-01 | Phase 4 | Complete |
+| CUST-02 | Phase 4 | Complete |
+| CUST-03 | Phase 4 | Complete |
+| CUST-04 | Phase 4 | Complete |
+| CUST-05 | Phase 4 | Complete |
+| EXTR-01 | Phase 4 | Complete |
+| EXTR-02 | Phase 4 | Complete |
+| EXTR-03 | Phase 4 | Complete |
+| EXTR-04 | Phase 4 | Complete |
 | EXTR-05 | Phase 1 | Complete |
 | CMS-01 | Phase 5 | Pending |
 | CMS-02 | Phase 5 | Pending |

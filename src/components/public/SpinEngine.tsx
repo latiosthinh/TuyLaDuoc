@@ -4,8 +4,10 @@ import React, { useState, useMemo, useTransition } from "react";
 import type { Dish, Category } from "@/db/schema";
 import { DishCard } from "./DishCard";
 import { PickerContainer } from "@/components/pickers/PickerContainer";
+import { CustomListModal } from "./CustomListModal";
+import { useCustomList } from "@/hooks/use-custom-list";
 import { recordSpinAction } from "@/app/actions/spin";
-import { Dices, Sparkles, AlertCircle, RefreshCw } from "lucide-react";
+import { Dices, Sparkles, AlertCircle, RefreshCw, Box } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SpinEngineProps {
@@ -28,12 +30,16 @@ export function SpinEngine({
   categories,
   initialSpinCount,
 }: SpinEngineProps) {
+  const [usePersonalPool, setUsePersonalPool] = useState<boolean>(false);
   const [selectedTab, setSelectedTab] = useState<string>("all");
   const [budgetIndex, setBudgetIndex] = useState<number>(0);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [spinCount, setSpinCount] = useState<number>(initialSpinCount);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [, startTransition] = useTransition();
+
+  const { customDishes, addDish, removeDish } = useCustomList();
 
   const categoryMap = useMemo(() => {
     const map = new Map<string, string>();
@@ -49,8 +55,10 @@ export function SpinEngine({
     { id: "mon_nhau", label: "Món nhậu" },
   ];
 
+  const candidatePool = usePersonalPool ? customDishes : dishes;
+
   const candidates = useMemo(() => {
-    return dishes.filter((dish) => {
+    return candidatePool.filter((dish) => {
       if (selectedTab !== "all") {
         const cat = categories.find((c) => c.id === dish.categoryId);
         if (!cat || cat.tab !== selectedTab) return false;
@@ -65,7 +73,7 @@ export function SpinEngine({
 
       return true;
     });
-  }, [dishes, categories, selectedTab, budgetIndex]);
+  }, [candidatePool, categories, selectedTab, budgetIndex]);
 
   const handleSpin = () => {
     if (candidates.length === 0 || isSpinning) return;
@@ -78,7 +86,6 @@ export function SpinEngine({
       if (updated > 0) setSpinCount(updated);
     });
 
-    // 2.2s animation duration matching deceleration physics
     setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * candidates.length);
       setSelectedDish(candidates[randomIndex]);
@@ -88,14 +95,55 @@ export function SpinEngine({
 
   return (
     <div className="flex w-full flex-col items-center">
-      {/* Global Spin Counter Badge */}
-      <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-orange-200/80 bg-orange-50/90 px-3.5 py-1 text-xs font-semibold text-orange-800 shadow-2xs dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300">
-        <Sparkles className="h-3.5 w-3.5 text-orange-600 dark:text-orange-400" />
-        <span>Lượt quay toàn trạm:</span>
-        <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
-          {spinCount.toLocaleString("vi-VN")}
-        </span>
+      {/* Top action bar: Counter & Custom list button */}
+      <div className="mb-6 flex flex-wrap items-center justify-center gap-2.5">
+        <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/80 bg-orange-50/90 px-3.5 py-1 text-xs font-semibold text-orange-800 shadow-2xs dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300">
+          <Sparkles className="h-3.5 w-3.5 text-orange-600 dark:text-orange-400" />
+          <span>Lượt quay toàn trạm:</span>
+          <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
+            {spinCount.toLocaleString("vi-VN")}
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+          className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-1 text-xs font-semibold text-stone-700 shadow-2xs transition-colors hover:border-orange-300 hover:text-orange-600 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-orange-900"
+        >
+          <Box className="h-3.5 w-3.5 text-orange-500" />
+          <span>Hòm của tôi ({customDishes.length})</span>
+        </button>
       </div>
+
+      {/* Pool Toggle: Global vs Personal */}
+      {customDishes.length > 0 && (
+        <div className="mb-6 inline-flex rounded-xl border border-stone-200 bg-stone-100 p-1 dark:border-stone-800 dark:bg-stone-900">
+          <button
+            type="button"
+            onClick={() => setUsePersonalPool(false)}
+            className={cn(
+              "rounded-lg px-3 py-1 text-xs font-semibold transition-all",
+              !usePersonalPool
+                ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400"
+                : "text-stone-500 hover:text-stone-800 dark:text-stone-400"
+            )}
+          >
+            Món toàn hệ thống
+          </button>
+          <button
+            type="button"
+            onClick={() => setUsePersonalPool(true)}
+            className={cn(
+              "rounded-lg px-3 py-1 text-xs font-semibold transition-all",
+              usePersonalPool
+                ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400"
+                : "text-stone-500 hover:text-stone-800 dark:text-stone-400"
+            )}
+          >
+            Hòm riêng ({customDishes.length})
+          </button>
+        </div>
+      )}
 
       {/* 4 Switchable Picker Modes Stage */}
       <div className="mb-8 w-full max-w-xl">
@@ -228,6 +276,16 @@ export function SpinEngine({
           </div>
         )}
       </div>
+
+      {/* Modal Custom List */}
+      <CustomListModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        customDishes={customDishes}
+        categories={categories}
+        onAddDish={addDish}
+        onRemoveDish={removeDish}
+      />
     </div>
   );
 }
