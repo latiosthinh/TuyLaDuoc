@@ -10,7 +10,7 @@ A structured 5-phase execution roadmap taking "Trưa Nay Ăn Gì" from an empty 
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Foundation, Database & Seed Data** - Bootstrap Next.js 16, Tailwind v4, Turso/Drizzle schema, ported dataset seed, and root layout with Be Vietnam Pro font.
+- [x] **Phase 1: Foundation, Database & Seed Data** - Bootstrap Next.js 16, Tailwind v4, Turso/Drizzle schema, ported dataset seed, and root layout with Be Vietnam Pro font.
 - [ ] **Phase 2: Core Public Experience & Spin Engine** - Public landing, category & budget filters, random selection engine, dish result card, atomic global spin counter, and `/dishes` library.
 - [ ] **Phase 3: 4 Animated Picker Modes & Visual Redesign** - Implement Roulette Wheel, Card Shuffle + Flip, Slot Reel, and Ngẫu hứng modes with Motion and clean minimal styling.
 - [ ] **Phase 4: Browser Personalization & Fun Extras** - Offline localStorage custom dish lists ("Hòm của tôi"), Quẻ trưa daily fortune card, Duyên vị, Khui vị, and static pages.
@@ -31,9 +31,9 @@ A structured 5-phase execution roadmap taking "Trưa Nay Ăn Gì" from an empty 
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: Project scaffolding with Next.js 16, Tailwind v4, Be Vietnam Pro font, and basic public layout.
-- [ ] 01-02: Drizzle ORM schema definition for Turso (dishes, categories, fortunes, settings, counters).
-- [ ] 01-03: Dataset porting script from original repo and database seed execution.
+- [x] 01-01: Project scaffolding with Next.js 16, Tailwind v4, Be Vietnam Pro font, and basic public layout.
+- [x] 01-02: Drizzle ORM schema definition for Turso (dishes, categories, fortunes, settings, counters).
+- [x] 01-03: Dataset porting script from original repo and database seed execution.
 
 ### Phase 2: Core Public Experience & Spin Engine
 **Goal**: Deliver the primary lunch-picking loop: category tabs, budget selector, client-side randomizer, dish result card with subtle rarity tags, atomic global counter, and dish library page.
@@ -115,7 +115,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation, Database & Seed Data | 0/3 | Not started | - |
+| 1. Foundation, Database & Seed Data | 3/3 | Complete | 2026-09-13 |
 | 2. Core Public Experience & Spin Engine | 0/3 | Not started | - |
 | 3. 4 Animated Picker Modes & Visual Redesign | 0/3 | Not started | - |
 | 4. Browser Personalization & Fun Extras | 0/3 | Not started | - |

@@ -1,0 +1,500 @@
+export interface SeedCategory {
+  id: string;
+  name: string;
+  tab: "mon_chinh" | "do_uong" | "an_vat" | "mon_nhau";
+  sortOrder: number;
+}
+
+export interface SeedDish {
+  id: string;
+  name: string;
+  subtitle: string;
+  price: number;
+  categoryId: string;
+  rarity: "QUOC_DAN" | "HIEM" | "CUC_PHAM" | "TOI_MAT" | "DAC_BIET";
+  imageUrl?: string;
+  dietTags: string[];
+}
+
+export interface SeedFortune {
+  id: string;
+  text: string;
+  advice: string;
+  luckyDish: string;
+}
+
+export const SEED_CATEGORIES: SeedCategory[] = [
+  { id: "bun-pho-mi", name: "Bún, phở & mì", tab: "mon_chinh", sortOrder: 1 },
+  { id: "com-xoi", name: "Cơm & xôi", tab: "mon_chinh", sortOrder: 2 },
+  { id: "banh-mi-cuon", name: "Bánh mì & cuốn", tab: "mon_chinh", sortOrder: 3 },
+  { id: "nuong-chien", name: "Nướng & chiên", tab: "mon_chinh", sortOrder: 4 },
+  { id: "pizza-pasta", name: "Pizza & pasta", tab: "mon_chinh", sortOrder: 5 },
+  { id: "salad-mon-nhe", name: "Salad & món nhẹ", tab: "mon_chinh", sortOrder: 6 },
+  { id: "chay", name: "Món chay thanh đạm", tab: "mon_chinh", sortOrder: 7 },
+  { id: "do-uong", name: "Đồ uống & Trà sữa", tab: "do_uong", sortOrder: 8 },
+  { id: "an-vat", name: "Ăn vặt & Tráng miệng", tab: "an_vat", sortOrder: 9 },
+  { id: "mon-nhau", name: "Món nhậu lai rai", tab: "mon_nhau", sortOrder: 10 },
+];
+
+export const SEED_DISHES: SeedDish[] = [
+  // Bún, phở & mì
+  {
+    id: "pho-bo-tai-nam",
+    name: "Phở bò",
+    subtitle: "Tái nạm gầu giòn • Hà Nội",
+    price: 55000,
+    categoryId: "bun-pho-mi",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "bun-cha-ha-noi",
+    name: "Bún chả",
+    subtitle: "Chả nướng than hoa • Hà Nội",
+    price: 55000,
+    categoryId: "bun-pho-mi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "bun-bo-hue",
+    name: "Bún bò Huế",
+    subtitle: "Bắp bò, chả cua sa tế • Huế",
+    price: 60000,
+    categoryId: "bun-pho-mi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "hu-tieu-nam-vang",
+    name: "Hủ tiếu Nam Vang",
+    subtitle: "Tôm thịt, tim cật khô nước • Miền Nam",
+    price: 50000,
+    categoryId: "bun-pho-mi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1547928576-a4a33237cbc3?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "bun-dau-mam-tom",
+    name: "Bún đậu mắm tôm",
+    subtitle: "Đậu rán giòn, chả cốm, nem rán",
+    price: 55000,
+    categoryId: "bun-pho-mi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "bun-rieu-cua",
+    name: "Bún riêu cua đồng",
+    subtitle: "Rau muống chẻ, riêu béo ngậy",
+    price: 45000,
+    categoryId: "bun-pho-mi",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1547928576-a4a33237cbc3?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "mi-quang",
+    name: "Mì Quảng gà",
+    subtitle: "Trứng cút, bánh tráng nướng giòn • Quảng Nam",
+    price: 50000,
+    categoryId: "bun-pho-mi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "mi-cay-han-quoc",
+    name: "Mì cay Hàn Quốc",
+    subtitle: "Hải sản hoặc bò Mỹ cấp độ cay",
+    price: 75000,
+    categoryId: "bun-pho-mi",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "mi-tuong-den",
+    name: "Mì tương đen (Jajangmyeon)",
+    subtitle: "Sốt tương đen đậm vị thịt heo củ cải",
+    price: 60000,
+    categoryId: "bun-pho-mi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "banh-canh-ghe",
+    name: "Bánh canh ghẹ",
+    subtitle: "Nước dùng sệt ngọt thanh thịt ghẹ tươi",
+    price: 75000,
+    categoryId: "bun-pho-mi",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1547928576-a4a33237cbc3?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Cơm & xôi
+  {
+    id: "com-tam-suon-bi-cha",
+    name: "Cơm tấm",
+    subtitle: "Sườn nướng, bì chả, trứng ốp la • Sài Gòn",
+    price: 50000,
+    categoryId: "com-xoi",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "com-ga-hoi-an",
+    name: "Cơm gà Hội An",
+    subtitle: "Gà xé trộn gỏi hành tây rau răm",
+    price: 55000,
+    categoryId: "com-xoi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "com-ga-hai-nam",
+    name: "Cơm gà Hải Nam",
+    subtitle: "Cơm dẻo nấu nước luộc gà béo thơm",
+    price: 75000,
+    categoryId: "com-xoi",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "com-rang-dua-bo",
+    name: "Cơm rang dưa bò",
+    subtitle: "Dưa chua giòn, thịt bò mềm xào lửa lớn",
+    price: 50000,
+    categoryId: "com-xoi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "com-nieu-singapore",
+    name: "Cơm niêu Singapore",
+    subtitle: "Cháy giòn rụm kèm sốt bò tiêu đen",
+    price: 85000,
+    categoryId: "com-xoi",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "bibimbap",
+    name: "Bibimbap",
+    subtitle: "Cơm trộn thố đá Hàn Quốc sốt Gochujang",
+    price: 75000,
+    categoryId: "com-xoi",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1553163147-622ab57be1c7?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "com-luon-nhat",
+    name: "Cơm lươn Nhật (Unadon)",
+    subtitle: "Lươn nướng sốt ngọt Kabayaki",
+    price: 180000,
+    categoryId: "com-xoi",
+    rarity: "DAC_BIET",
+    imageUrl: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "poke-ca-hoi",
+    name: "Poke cá hồi",
+    subtitle: "Cá hồi tươi sốt mè rang bơ đậu nành edamame",
+    price: 160000,
+    categoryId: "com-xoi",
+    rarity: "DAC_BIET",
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    dietTags: ["healthy"],
+  },
+
+  // Bánh mì & cuốn
+  {
+    id: "banh-mi-thit-nuong",
+    name: "Bánh mì thịt nướng",
+    subtitle: "Thịt nướng xả, đồ chua, pate béo ngậy",
+    price: 30000,
+    categoryId: "banh-mi-cuon",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "banh-mi-chao",
+    name: "Bánh mì chảo",
+    subtitle: "Pate cột đèn, trứng ốp la, xúc xích sốt tiêu",
+    price: 45000,
+    categoryId: "banh-mi-cuon",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "banh-xeo",
+    name: "Bánh xèo miền Tây",
+    subtitle: "Vỏ giòn rụm nhân tôm thịt rau rừng",
+    price: 50000,
+    categoryId: "banh-mi-cuon",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "banh-cuon-nong",
+    name: "Bánh cuốn nóng",
+    subtitle: "Tráng tay nhân mộc nhĩ thịt băm hành phi giòn",
+    price: 35000,
+    categoryId: "banh-mi-cuon",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Nướng & chiên
+  {
+    id: "ga-ran-gion-cay",
+    name: "Gà rán giòn cay",
+    subtitle: "Lớp vỏ giòn rụm chuẩn vị quốc tế",
+    price: 65000,
+    categoryId: "nuong-chien",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "bo-bit-tet",
+    name: "Bò bít tết sốt tiêu",
+    subtitle: "Thịt thăn bò mềm kèm khoai tây chiên bánh mì",
+    price: 180000,
+    categoryId: "nuong-chien",
+    rarity: "DAC_BIET",
+    imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "suon-nuong-bbq",
+    name: "Sườn nướng BBQ",
+    subtitle: "Sườn heo nướng sốt khói sốt mật ong đậm đà",
+    price: 230000,
+    categoryId: "nuong-chien",
+    rarity: "DAC_BIET",
+    imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "ga-pho-mai-han",
+    name: "Gà sốt phô mai Hàn",
+    subtitle: "Thịt gà rút xương sốt cay kéo sợi phô mai",
+    price: 120000,
+    categoryId: "nuong-chien",
+    rarity: "TOI_MAT",
+    imageUrl: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Pizza & pasta
+  {
+    id: "pizza-hai-san",
+    name: "Pizza hải sản",
+    subtitle: "Tôm mực phô mai mozzarella nướng củi",
+    price: 160000,
+    categoryId: "pizza-pasta",
+    rarity: "DAC_BIET",
+    imageUrl: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "spaghetti-bo-bam",
+    name: "Mì Ý bò băm Bolognese",
+    subtitle: "Sốt cà chua đậm đà phô mai parmesan",
+    price: 85000,
+    categoryId: "pizza-pasta",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Salad & món nhẹ
+  {
+    id: "salad-ca-ngu",
+    name: "Salad cá ngừ",
+    subtitle: "Rau rocket, cà chua bi sốt giấm balsamic",
+    price: 110000,
+    categoryId: "salad-mon-nhe",
+    rarity: "TOI_MAT",
+    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80",
+    dietTags: ["healthy"],
+  },
+  {
+    id: "salad-quinoa-dau-ga",
+    name: "Salad quinoa đậu gà",
+    subtitle: "Hạt diêm mạch, rau củ nướng sốt mè",
+    price: 115000,
+    categoryId: "salad-mon-nhe",
+    rarity: "TOI_MAT",
+    imageUrl: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&auto=format&fit=crop&q=80",
+    dietTags: ["healthy", "chay"],
+  },
+
+  // Chay
+  {
+    id: "com-chay-dau-hu",
+    name: "Cơm chay thanh tịnh",
+    subtitle: "Đậu hũ kho nấm hương, rau củ luộc kho quẹt chay",
+    price: 35000,
+    categoryId: "chay",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    dietTags: ["chay"],
+  },
+  {
+    id: "canh-dau-hu-non",
+    name: "Canh đậu hũ non nấm",
+    subtitle: "Kèm cơm gạo lứt thanh đạm",
+    price: 70000,
+    categoryId: "chay",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600&auto=format&fit=crop&q=80",
+    dietTags: ["chay", "healthy"],
+  },
+
+  // Đồ uống
+  {
+    id: "tra-sua-tran-chau",
+    name: "Trà sữa trân châu đường đen",
+    subtitle: "Sữa tươi trân châu mềm dẻo",
+    price: 45000,
+    categoryId: "do-uong",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1558857563-b37cfb42c676?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "ca-phe-muoi",
+    name: "Cà phê muối",
+    subtitle: "Vị béo ngậy mặn mòi phong cách Huế",
+    price: 30000,
+    categoryId: "do-uong",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "tra-dao-cam-sa",
+    name: "Trà đào cam sả",
+    subtitle: "Thanh mát giải nhiệt trưa hè",
+    price: 40000,
+    categoryId: "do-uong",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Ăn vặt
+  {
+    id: "banh-trang-tron",
+    name: "Bánh tráng trộn",
+    subtitle: "Bò khô, trứng cút, xoài băm sốt me cay",
+    price: 25000,
+    categoryId: "an-vat",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "nem-chua-ran",
+    name: "Nem chua rán Hà Nội",
+    subtitle: "Giòn rụm chấm tương ớt cay nồng",
+    price: 40000,
+    categoryId: "an-vat",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Món nhậu
+  {
+    id: "chan-ga-sa-tac",
+    name: "Chân gà sả tắc",
+    subtitle: "Chua cay giòn sần sật ướp lá chanh",
+    price: 65000,
+    categoryId: "mon-nhau",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1562967914-608f82629710?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "muc-nuong-sa-te",
+    name: "Mực nướng sa tế",
+    subtitle: "Mực một nắng cay nồng thơm lừng",
+    price: 110000,
+    categoryId: "mon-nhau",
+    rarity: "TOI_MAT",
+    imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+];
+
+export const SEED_FORTUNES: SeedFortune[] = [
+  {
+    id: "que-01",
+    text: "Hôm nay đại cát, mọi việc hanh thông.",
+    advice: "Nên thưởng cho bản thân một bữa phở bò tái nạm nóng hổi để tiếp thêm năng lượng.",
+    luckyDish: "Phở bò",
+  },
+  {
+    id: "que-02",
+    text: "Tâm bình khí hòa, ăn uống thanh tịnh.",
+    advice: "Một đĩa cơm chay hoặc canh đậu hũ non sẽ giúp bạn làm việc nhẹ nhàng cả buổi chiều.",
+    luckyDish: "Cơm chay thanh tịnh",
+  },
+  {
+    id: "que-03",
+    text: "Quý nhân phù trợ, cơ hội bất ngờ gõ cửa.",
+    advice: "Ăn cơm tấm sườn bì chả để giữ vững phong độ và năng lượng bứt phá.",
+    luckyDish: "Cơm tấm",
+  },
+  {
+    id: "que-04",
+    text: "Đừng ngần ngại thử nghiệm những điều mới.",
+    advice: "Một phần sushi cá hồi hay poke tươi rói sẽ mở ra cảm hứng sáng tạo dồi dào.",
+    luckyDish: "Poke cá hồi",
+  },
+  {
+    id: "que-05",
+    text: "Lắng nghe cơ thể, chớ làm việc quá sức.",
+    advice: "Uống một ly trà đào cam sả thanh mát và ăn bánh mì thịt nướng nhẹ bụng nhé.",
+    luckyDish: "Bánh mì thịt nướng",
+  },
+  {
+    id: "que-06",
+    text: "Gặp gỡ bạn bè, sẻ chia niềm vui.",
+    advice: "Buổi trưa rủ đồng nghiệp cùng ăn bún đậu mắm tôm là gắn kết tình cảm nhất!",
+    luckyDish: "Bún đậu mắm tôm",
+  },
+  {
+    id: "que-07",
+    text: "Cần chút gia vị bùng nổ cho ngày bận rộn.",
+    advice: "Mì cay Hàn Quốc cấp độ 2 sẽ đánh thức mọi giác quan đang ngủ gật.",
+    luckyDish: "Mì cay Hàn Quốc",
+  },
+  {
+    id: "que-08",
+    text: "Tiền tài rủng rỉnh, chớ ngại chi tiêu.",
+    advice: "Bò bít tết sốt tiêu thượng hạng là lựa chọn xứng đáng cho nỗ lực của bạn.",
+    luckyDish: "Bò bít tết sốt tiêu",
+  },
+];

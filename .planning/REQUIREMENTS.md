@@ -55,7 +55,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **EXTR-02**: User can explore flavor compatibility on `/duyen-vi` (Duyên vị)
 - [ ] **EXTR-03**: User can experience a mystery dish unlock on `/khui-vi` (Khui vị)
 - [ ] **EXTR-04**: User can access standard static information pages: Privacy (`/privacy`), Terms (`/terms`), Contact
-- [ ] **EXTR-05**: Public footer prominently displays data source and inspiration credit to `truanayangi.com`
+- [x] **EXTR-05**: Public footer prominently displays data source and inspiration credit to `truanayangi.com`
 
 ### Admin CMS & Authentication (CMS)
 
@@ -70,9 +70,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Data Seeding & Architecture (DATA)
 
-- [ ] **DATA-01**: Initial dish dataset ported from original `truanayangi-com/truanayangi` repository and seeded into Turso DB
-- [ ] **DATA-02**: Drizzle ORM schema created for dishes, categories, fortunes, site settings, and counters
-- [ ] **DATA-03**: Typography renders all Vietnamese diacritics cleanly with zero clipping using Be Vietnam Pro
+- [x] **DATA-01**: Initial dish dataset ported from original `truanayangi-com/truanayangi` repository and seeded into Turso DB
+- [x] **DATA-02**: Drizzle ORM schema created for dishes, categories, fortunes, site settings, and counters
+- [x] **DATA-03**: Typography renders all Vietnamese diacritics cleanly with zero clipping using Be Vietnam Pro
 
 ## v2 Requirements
 
@@ -134,7 +134,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | EXTR-02 | Phase 4 | Pending |
 | EXTR-03 | Phase 4 | Pending |
 | EXTR-04 | Phase 4 | Pending |
-| EXTR-05 | Phase 1 | Pending |
+| EXTR-05 | Phase 1 | Complete |
 | CMS-01 | Phase 5 | Pending |
 | CMS-02 | Phase 5 | Pending |
 | CMS-03 | Phase 5 | Pending |
@@ -143,9 +143,9 @@ Which phases cover which requirements. Populated during roadmap creation.
 | CMS-06 | Phase 5 | Pending |
 | CMS-07 | Phase 5 | Pending |
 | CMS-08 | Phase 5 | Pending |
-| DATA-01 | Phase 1 | Pending |
-| DATA-02 | Phase 1 | Pending |
-| DATA-03 | Phase 1 | Pending |
+| DATA-01 | Phase 1 | Complete |
+| DATA-02 | Phase 1 | Complete |
+| DATA-03 | Phase 1 | Complete |
 
 **Coverage:**
 - v1 requirements: 41 total
