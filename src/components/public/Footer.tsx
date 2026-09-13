@@ -4,7 +4,7 @@ import { Heart, ExternalLink } from "lucide-react";
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-stone-200/80 bg-white py-10 text-xs text-stone-500 dark:border-stone-800/80 dark:bg-stone-900/60 dark:text-stone-400">
-      <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-4 px-4 text-center sm:flex-row sm:px-6 sm:text-left">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center sm:flex-row sm:px-6 lg:px-8 sm:text-left">
         <div className="flex flex-col gap-1">
           <p className="flex items-center justify-center gap-1 sm:justify-start">
             <span>Dành cho những buổi trưa không biết ăn gì với</span>

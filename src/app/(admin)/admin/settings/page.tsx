@@ -12,7 +12,7 @@ export default async function AdminSettingsPage() {
   const settingsRows = await db.select().from(siteSettings);
   const settingsMap = new Map(settingsRows.map((r) => [r.key, r.value]));
 
-  const defaultPickerMode = settingsMap.get("default_picker_mode") || "roulette";
+  const defaultPickerMode = settingsMap.get("default_picker_mode") || "cards";
   const homepageTagline =
     settingsMap.get("homepage_tagline") ||
     "Hôm nay chưa biết trưa nay ăn gì? Quay chọn món theo ngân sách và sở thích!";
@@ -39,12 +39,11 @@ export default async function AdminSettingsPage() {
           </label>
           <select
             name="defaultPickerMode"
-            defaultValue={defaultPickerMode}
+            defaultValue={defaultPickerMode === "roulette" ? "cards" : defaultPickerMode}
             className="rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-xs focus:border-orange-500 focus:outline-none dark:border-stone-700 dark:bg-stone-800"
           >
-            <option value="roulette">Vòng quay (Roulette Wheel)</option>
-            <option value="cards">Lật bài bí mật (Card Shuffle & Flip)</option>
-            <option value="slot">Quả chuông (Slot Machine Reel)</option>
+            <option value="cards">Thẻ bài & Vuốt (Card Shuffle & Flip)</option>
+            <option value="slot">Băng chuyền món (Horizontal Reel)</option>
             <option value="random">Ngẫu hứng (Random kiểu quay mỗi lần)</option>
           </select>
           <span className="text-[11px] text-stone-400">

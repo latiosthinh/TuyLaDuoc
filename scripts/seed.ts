@@ -91,7 +91,7 @@ async function seed() {
   // 4. Seed site settings
   console.log("- Cấu hình cài đặt mặc định...");
   const defaultSettings = [
-    { key: "default_picker_mode", value: "roulette" },
+    { key: "default_picker_mode", value: "cards" },
     {
       key: "homepage_tagline",
       value:

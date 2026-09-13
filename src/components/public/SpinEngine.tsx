@@ -96,11 +96,11 @@ export function SpinEngine({
   return (
     <div className="flex w-full flex-col items-center">
       {/* Top action bar: Counter & Custom list button */}
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-2.5">
-        <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/80 bg-orange-50/90 px-3.5 py-1 text-xs font-semibold text-orange-800 shadow-2xs dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300">
-          <Sparkles className="h-3.5 w-3.5 text-orange-600 dark:text-orange-400" />
+      <div className="mb-8 flex flex-wrap items-center justify-center gap-3">
+        <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/80 bg-orange-50/90 px-4 py-1.5 text-xs font-bold text-orange-800 shadow-2xs dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300">
+          <Sparkles className="h-4 w-4 text-orange-600 dark:text-orange-400" />
           <span>Lượt quay toàn trạm:</span>
-          <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
+          <span className="font-mono text-sm font-extrabold text-orange-600 dark:text-orange-400">
             {spinCount.toLocaleString("vi-VN")}
           </span>
         </div>
@@ -108,9 +108,9 @@ export function SpinEngine({
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-1 text-xs font-semibold text-stone-700 shadow-2xs transition-colors hover:border-orange-300 hover:text-orange-600 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-orange-900"
+          className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-xs font-bold text-stone-700 shadow-2xs transition-all hover:border-orange-300 hover:text-orange-600 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-orange-900"
         >
-          <Box className="h-3.5 w-3.5 text-orange-500" />
+          <Box className="h-4 w-4 text-orange-500" />
           <span>Hòm của tôi ({customDishes.length})</span>
         </button>
       </div>
@@ -122,7 +122,7 @@ export function SpinEngine({
             type="button"
             onClick={() => setUsePersonalPool(false)}
             className={cn(
-              "rounded-lg px-3 py-1 text-xs font-semibold transition-all",
+              "rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all",
               !usePersonalPool
                 ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400"
                 : "text-stone-500 hover:text-stone-800 dark:text-stone-400"
@@ -134,7 +134,7 @@ export function SpinEngine({
             type="button"
             onClick={() => setUsePersonalPool(true)}
             className={cn(
-              "rounded-lg px-3 py-1 text-xs font-semibold transition-all",
+              "rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all",
               usePersonalPool
                 ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400"
                 : "text-stone-500 hover:text-stone-800 dark:text-stone-400"
@@ -145,23 +145,25 @@ export function SpinEngine({
         </div>
       )}
 
-      {/* 4 Switchable Picker Modes Stage */}
-      <div className="mb-8 w-full max-w-xl">
+      {/* Spacious Picker Modes Stage (Expanded for desktop dance space) */}
+      <div className="mb-10 w-full max-w-5xl">
         <PickerContainer
           candidates={candidates}
           selectedDish={selectedDish}
           isSpinning={isSpinning}
+          onSelectDish={(dish) => setSelectedDish(dish)}
+          onRespin={handleSpin}
         />
       </div>
 
-      {/* Filter Control Box */}
-      <div className="w-full max-w-xl rounded-2xl border border-stone-200/80 bg-white/90 p-5 shadow-xs backdrop-blur-xs dark:border-stone-800/80 dark:bg-stone-900/90 sm:p-6">
+      {/* Filter Control Box (Widened to max-w-3xl) */}
+      <div className="w-full max-w-3xl rounded-3xl border border-stone-200/80 bg-white/95 p-6 shadow-sm backdrop-blur-xs dark:border-stone-800/80 dark:bg-stone-900/95 sm:p-8">
         {/* Category Tabs */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2.5">
           <label className="text-left text-xs font-bold text-stone-700 dark:text-stone-300">
             1. Bạn muốn ăn gì trưa nay?
           </label>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {tabOptions.map((tab) => (
               <button
                 key={tab.id}
@@ -171,7 +173,7 @@ export function SpinEngine({
                   setSelectedDish(null);
                 }}
                 className={cn(
-                  "rounded-xl px-3 py-1.5 text-xs font-medium transition-all",
+                  "rounded-xl px-4 py-2 text-xs font-bold transition-all",
                   selectedTab === tab.id
                     ? "bg-orange-600 text-white shadow-xs"
                     : "bg-stone-100 text-stone-600 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-300 dark:hover:bg-stone-700"
@@ -184,16 +186,16 @@ export function SpinEngine({
         </div>
 
         {/* Budget Chips */}
-        <div className="mt-5 flex flex-col gap-2">
+        <div className="mt-6 flex flex-col gap-2.5">
           <div className="flex items-center justify-between">
             <label className="text-left text-xs font-bold text-stone-700 dark:text-stone-300">
               2. Ngân sách dự kiến
             </label>
-            <span className="text-[11px] text-stone-400">
+            <span className="text-xs font-medium text-stone-400">
               {candidates.length} món phù hợp
             </span>
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {BUDGET_TIERS.map((tier, idx) => (
               <button
                 key={tier.label}
@@ -203,9 +205,9 @@ export function SpinEngine({
                   setSelectedDish(null);
                 }}
                 className={cn(
-                  "rounded-xl px-3 py-1.5 text-xs font-medium transition-all",
+                  "rounded-xl px-4 py-2 text-xs font-bold transition-all",
                   budgetIndex === idx
-                    ? "border border-orange-500 bg-orange-50 text-orange-700 font-semibold dark:bg-orange-950/60 dark:text-orange-300"
+                    ? "border border-orange-500 bg-orange-50 text-orange-700 shadow-2xs dark:bg-orange-950/60 dark:text-orange-300"
                     : "border border-stone-200/80 bg-white text-stone-600 hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-800/80 dark:text-stone-300"
                 )}
               >
@@ -216,31 +218,31 @@ export function SpinEngine({
         </div>
 
         {/* Action Button */}
-        <div className="mt-6">
+        <div className="mt-8">
           {candidates.length > 0 ? (
             <button
               type="button"
               disabled={isSpinning}
               onClick={handleSpin}
               className={cn(
-                "group relative flex w-full items-center justify-center gap-2 rounded-xl bg-orange-600 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:bg-orange-700 hover:shadow-lg active:scale-98",
+                "group relative flex w-full items-center justify-center gap-2.5 rounded-2xl bg-orange-600 py-4 text-base font-extrabold text-white shadow-lg transition-all hover:bg-orange-700 hover:shadow-xl active:scale-98",
                 isSpinning && "cursor-not-allowed opacity-80"
               )}
             >
               {isSpinning ? (
                 <>
-                  <RefreshCw className="h-4 w-4 animate-spin" />
-                  <span>Đang quay chọn món...</span>
+                  <RefreshCw className="h-5 w-5 animate-spin" />
+                  <span>Đang quay chọn món ngon trưa nay...</span>
                 </>
               ) : (
                 <>
-                  <Dices className="h-4 w-4 transition-transform group-hover:rotate-180" />
+                  <Dices className="h-5 w-5 transition-transform group-hover:rotate-180" />
                   <span>QUAY CHỌN MÓN NGAY</span>
                 </>
               )}
             </button>
           ) : (
-            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-stone-300 p-4 text-center dark:border-stone-700">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-stone-300 p-6 text-center dark:border-stone-700">
               <div className="flex items-center gap-1.5 text-xs font-semibold text-stone-600 dark:text-stone-400">
                 <AlertCircle className="h-4 w-4 text-amber-500" />
                 <span>Không có món nào phù hợp với bộ lọc hiện tại.</span>
@@ -264,7 +266,7 @@ export function SpinEngine({
       <div className="mt-8 w-full max-w-md">
         {selectedDish && !isSpinning && (
           <div className="animate-in fade-in zoom-in-95 duration-300">
-            <div className="mb-2 text-center text-xs font-bold uppercase tracking-wider text-orange-600 dark:text-orange-400">
+            <div className="mb-2.5 text-center text-xs font-extrabold uppercase tracking-widest text-orange-600 dark:text-orange-400">
               🎉 Trưa nay ăn món này nhé!
             </div>
             <DishCard
