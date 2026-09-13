@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useTransition } from "react";
 import type { Dish, Category } from "@/db/schema";
 import { DishCard } from "./DishCard";
+import { PickerContainer } from "@/components/pickers/PickerContainer";
 import { recordSpinAction } from "@/app/actions/spin";
 import { Dices, Sparkles, AlertCircle, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -19,10 +20,14 @@ const BUDGET_TIERS = [
   { label: "≤ 50k", max: 50000 },
   { label: "≤ 75k", max: 75000 },
   { label: "≤ 100k", max: 100000 },
-  { label: "> 100k", max: -1 }, // special flag for luxury
+  { label: "> 100k", max: -1 },
 ];
 
-export function SpinEngine({ dishes, categories, initialSpinCount }: SpinEngineProps) {
+export function SpinEngine({
+  dishes,
+  categories,
+  initialSpinCount,
+}: SpinEngineProps) {
   const [selectedTab, setSelectedTab] = useState<string>("all");
   const [budgetIndex, setBudgetIndex] = useState<number>(0);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
@@ -30,14 +35,12 @@ export function SpinEngine({ dishes, categories, initialSpinCount }: SpinEngineP
   const [spinCount, setSpinCount] = useState<number>(initialSpinCount);
   const [, startTransition] = useTransition();
 
-  // Create category map for fast lookup
   const categoryMap = useMemo(() => {
     const map = new Map<string, string>();
     categories.forEach((c) => map.set(c.id, c.name));
     return map;
   }, [categories]);
 
-  // Unique tabs
   const tabOptions = [
     { id: "all", label: "Tất cả món" },
     { id: "mon_chinh", label: "Món chính" },
@@ -46,16 +49,13 @@ export function SpinEngine({ dishes, categories, initialSpinCount }: SpinEngineP
     { id: "mon_nhau", label: "Món nhậu" },
   ];
 
-  // Filter candidates
   const candidates = useMemo(() => {
     return dishes.filter((dish) => {
-      // Category tab match
       if (selectedTab !== "all") {
         const cat = categories.find((c) => c.id === dish.categoryId);
         if (!cat || cat.tab !== selectedTab) return false;
       }
 
-      // Budget match
       const currentTier = BUDGET_TIERS[budgetIndex];
       if (currentTier.max === -1) {
         if (dish.price <= 100000) return false;
@@ -73,22 +73,21 @@ export function SpinEngine({ dishes, categories, initialSpinCount }: SpinEngineP
     setIsSpinning(true);
     setSelectedDish(null);
 
-    // Atomic server counter increment
     startTransition(async () => {
       const updated = await recordSpinAction();
       if (updated > 0) setSpinCount(updated);
     });
 
-    // Simulate picker deceleration reveal
+    // 2.2s animation duration matching deceleration physics
     setTimeout(() => {
       const randomIndex = Math.floor(Math.random() * candidates.length);
       setSelectedDish(candidates[randomIndex]);
       setIsSpinning(false);
-    }, 1200);
+    }, 2200);
   };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="flex w-full flex-col items-center">
       {/* Global Spin Counter Badge */}
       <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-orange-200/80 bg-orange-50/90 px-3.5 py-1 text-xs font-semibold text-orange-800 shadow-2xs dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300">
         <Sparkles className="h-3.5 w-3.5 text-orange-600 dark:text-orange-400" />
@@ -96,6 +95,15 @@ export function SpinEngine({ dishes, categories, initialSpinCount }: SpinEngineP
         <span className="font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
           {spinCount.toLocaleString("vi-VN")}
         </span>
+      </div>
+
+      {/* 4 Switchable Picker Modes Stage */}
+      <div className="mb-8 w-full max-w-xl">
+        <PickerContainer
+          candidates={candidates}
+          selectedDish={selectedDish}
+          isSpinning={isSpinning}
+        />
       </div>
 
       {/* Filter Control Box */}
@@ -159,7 +167,7 @@ export function SpinEngine({ dishes, categories, initialSpinCount }: SpinEngineP
           </div>
         </div>
 
-        {/* Action Button or Empty Warning */}
+        {/* Action Button */}
         <div className="mt-6">
           {candidates.length > 0 ? (
             <button
@@ -174,7 +182,7 @@ export function SpinEngine({ dishes, categories, initialSpinCount }: SpinEngineP
               {isSpinning ? (
                 <>
                   <RefreshCw className="h-4 w-4 animate-spin" />
-                  <span>Đang quay chọn món ngon...</span>
+                  <span>Đang quay chọn món...</span>
                 </>
               ) : (
                 <>

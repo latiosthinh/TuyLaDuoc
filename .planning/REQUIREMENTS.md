@@ -18,14 +18,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### 4 Picker Presentation Modes (MODE)
 
-- [ ] **MODE-01**: User can experience dish selection via an animated Roulette Wheel mode with deceleration physics
-- [ ] **MODE-02**: User can experience dish selection via a Card Shuffle & 3D Flip reveal mode
-- [ ] **MODE-03**: User can experience dish selection via a vertical Slot Machine Reel mode
-- [ ] **MODE-04**: User can select "Ngẫu hứng" mode which randomly picks one of the three visual modes per spin
-- [ ] **MODE-05**: User can switch between the 4 picker presentation modes via an intuitive UI toggle
-- [ ] **MODE-06**: First-time visitors automatically receive the admin-configured default picker mode
-- [ ] **MODE-07**: User's chosen picker mode is persisted in browser localStorage across visits
-- [ ] **MODE-08**: All picker animations run at 60fps on mobile using GPU-accelerated transforms and respect `prefers-reduced-motion`
+- [x] **MODE-01**: User can experience dish selection via an animated Roulette Wheel mode with deceleration physics
+- [x] **MODE-02**: User can experience dish selection via a Card Shuffle & 3D Flip reveal mode
+- [x] **MODE-03**: User can experience dish selection via a vertical Slot Machine Reel mode
+- [x] **MODE-04**: User can select "Ngẫu hứng" mode which randomly picks one of the three visual modes per spin
+- [x] **MODE-05**: User can switch between the 4 picker presentation modes via an intuitive UI toggle
+- [x] **MODE-06**: First-time visitors automatically receive the admin-configured default picker mode
+- [x] **MODE-07**: User's chosen picker mode is persisted in browser localStorage across visits
+- [x] **MODE-08**: All picker animations run at 60fps on mobile using GPU-accelerated transforms and respect `prefers-reduced-motion`
 
 ### Dish Display & Library (DISH)
 
@@ -109,14 +109,14 @@ Which phases cover which requirements. Populated during roadmap creation.
 | SPIN-04 | Phase 2 | Complete |
 | SPIN-05 | Phase 2 | Complete |
 | SPIN-06 | Phase 2 | Complete |
-| MODE-01 | Phase 3 | Pending |
-| MODE-02 | Phase 3 | Pending |
-| MODE-03 | Phase 3 | Pending |
-| MODE-04 | Phase 3 | Pending |
-| MODE-05 | Phase 3 | Pending |
-| MODE-06 | Phase 3 | Pending |
-| MODE-07 | Phase 3 | Pending |
-| MODE-08 | Phase 3 | Pending |
+| MODE-01 | Phase 3 | Complete |
+| MODE-02 | Phase 3 | Complete |
+| MODE-03 | Phase 3 | Complete |
+| MODE-04 | Phase 3 | Complete |
+| MODE-05 | Phase 3 | Complete |
+| MODE-06 | Phase 3 | Complete |
+| MODE-07 | Phase 3 | Complete |
+| MODE-08 | Phase 3 | Complete |
 | DISH-01 | Phase 2 | Complete |
 | DISH-02 | Phase 2 | Complete |
 | DISH-03 | Phase 2 | Complete |
