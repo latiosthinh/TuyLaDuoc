@@ -9,12 +9,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Core Spin Engine & Filtering (SPIN)
 
-- [ ] **SPIN-01**: User can filter dish candidates by top-level category tabs (Món chính, Đồ uống, Ăn vặt, Món nhậu)
-- [ ] **SPIN-02**: User can filter dish candidates by budget step (e.g. 30k, 50k, 70k, 100k+ VND)
-- [ ] **SPIN-03**: User can trigger a spin to randomly select a dish from the filtered candidate pool
-- [ ] **SPIN-04**: User can re-spin immediately to pick another suggestion without page reload
-- [ ] **SPIN-05**: User sees an empty/fallback state with helpful message if no dishes match current filters
-- [ ] **SPIN-06**: Spin execution occurs strictly on client interaction to prevent SSR hydration mismatches
+- [x] **SPIN-01**: User can filter dish candidates by top-level category tabs (Món chính, Đồ uống, Ăn vặt, Món nhậu)
+- [x] **SPIN-02**: User can filter dish candidates by budget step (e.g. 30k, 50k, 70k, 100k+ VND)
+- [x] **SPIN-03**: User can trigger a spin to randomly select a dish from the filtered candidate pool
+- [x] **SPIN-04**: User can re-spin immediately to pick another suggestion without page reload
+- [x] **SPIN-05**: User sees an empty/fallback state with helpful message if no dishes match current filters
+- [x] **SPIN-06**: Spin execution occurs strictly on client interaction to prevent SSR hydration mismatches
 
 ### 4 Picker Presentation Modes (MODE)
 
@@ -29,17 +29,17 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Dish Display & Library (DISH)
 
-- [ ] **DISH-01**: Result card displays dish name, subtitle/description, formatted price in VND, and category
-- [ ] **DISH-02**: Result card displays subtle rarity badge (QUỐC DÂN, HIẾM, CỰC PHẨM, TỐI MẬT, ★ ĐẶC BIỆT)
-- [ ] **DISH-03**: User can browse the full dish library page at `/dishes` (Kho tiếp tế)
-- [ ] **DISH-04**: User can search and filter dishes on `/dishes` by category, price, and rarity
-- [ ] **DISH-05**: Dish cards render crisp imagery via Next.js Image optimization with responsive sizing
+- [x] **DISH-01**: Result card displays dish name, subtitle/description, formatted price in VND, and category
+- [x] **DISH-02**: Result card displays subtle rarity badge (QUỐC DÂN, HIẾM, CỰC PHẨM, TỐI MẬT, ★ ĐẶC BIỆT)
+- [x] **DISH-03**: User can browse the full dish library page at `/dishes` (Kho tiếp tế)
+- [x] **DISH-04**: User can search and filter dishes on `/dishes` by category, price, and rarity
+- [x] **DISH-05**: Dish cards render crisp imagery via Next.js Image optimization with responsive sizing
 
 ### Global Spin Counter (STAT)
 
-- [ ] **STAT-01**: User sees the live site-wide total spin counter ("Lượt quay toàn trạm")
-- [ ] **STAT-02**: Counter increments atomically on the server exclusively when a user clicks the spin button
-- [ ] **STAT-03**: Counter is protected against artificial inflation from search engine bots and Link prefetching
+- [x] **STAT-01**: User sees the live site-wide total spin counter ("Lượt quay toàn trạm")
+- [x] **STAT-02**: Counter increments atomically on the server exclusively when a user clicks the spin button
+- [x] **STAT-03**: Counter is protected against artificial inflation from search engine bots and Link prefetching
 
 ### Local Custom Lists (CUST)
 
@@ -103,12 +103,12 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SPIN-01 | Phase 2 | Pending |
-| SPIN-02 | Phase 2 | Pending |
-| SPIN-03 | Phase 2 | Pending |
-| SPIN-04 | Phase 2 | Pending |
-| SPIN-05 | Phase 2 | Pending |
-| SPIN-06 | Phase 2 | Pending |
+| SPIN-01 | Phase 2 | Complete |
+| SPIN-02 | Phase 2 | Complete |
+| SPIN-03 | Phase 2 | Complete |
+| SPIN-04 | Phase 2 | Complete |
+| SPIN-05 | Phase 2 | Complete |
+| SPIN-06 | Phase 2 | Complete |
 | MODE-01 | Phase 3 | Pending |
 | MODE-02 | Phase 3 | Pending |
 | MODE-03 | Phase 3 | Pending |
@@ -117,14 +117,14 @@ Which phases cover which requirements. Populated during roadmap creation.
 | MODE-06 | Phase 3 | Pending |
 | MODE-07 | Phase 3 | Pending |
 | MODE-08 | Phase 3 | Pending |
-| DISH-01 | Phase 2 | Pending |
-| DISH-02 | Phase 2 | Pending |
-| DISH-03 | Phase 2 | Pending |
-| DISH-04 | Phase 2 | Pending |
-| DISH-05 | Phase 2 | Pending |
-| STAT-01 | Phase 2 | Pending |
-| STAT-02 | Phase 2 | Pending |
-| STAT-03 | Phase 2 | Pending |
+| DISH-01 | Phase 2 | Complete |
+| DISH-02 | Phase 2 | Complete |
+| DISH-03 | Phase 2 | Complete |
+| DISH-04 | Phase 2 | Complete |
+| DISH-05 | Phase 2 | Complete |
+| STAT-01 | Phase 2 | Complete |
+| STAT-02 | Phase 2 | Complete |
+| STAT-03 | Phase 2 | Complete |
 | CUST-01 | Phase 4 | Pending |
 | CUST-02 | Phase 4 | Pending |
 | CUST-03 | Phase 4 | Pending |

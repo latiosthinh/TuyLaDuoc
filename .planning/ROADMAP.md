@@ -11,7 +11,7 @@ A structured 5-phase execution roadmap taking "Trưa Nay Ăn Gì" from an empty 
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Foundation, Database & Seed Data** - Bootstrap Next.js 16, Tailwind v4, Turso/Drizzle schema, ported dataset seed, and root layout with Be Vietnam Pro font.
-- [ ] **Phase 2: Core Public Experience & Spin Engine** - Public landing, category & budget filters, random selection engine, dish result card, atomic global spin counter, and `/dishes` library.
+- [x] **Phase 2: Core Public Experience & Spin Engine** - Public landing, category & budget filters, random selection engine, dish result card, atomic global spin counter, and `/dishes` library.
 - [ ] **Phase 3: 4 Animated Picker Modes & Visual Redesign** - Implement Roulette Wheel, Card Shuffle + Flip, Slot Reel, and Ngẫu hứng modes with Motion and clean minimal styling.
 - [ ] **Phase 4: Browser Personalization & Fun Extras** - Offline localStorage custom dish lists ("Hòm của tôi"), Quẻ trưa daily fortune card, Duyên vị, Khui vị, and static pages.
 - [ ] **Phase 5: Admin CMS & Content Management** - Better Auth email/password login, dish/category CRUD with Vercel Blob image upload, fortune editor, and settings management.
@@ -49,9 +49,9 @@ Plans:
 **Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: Spin engine with category tabs, budget slider/selector, and client-side randomizer logic.
-- [ ] 02-02: Dish result card component with subtle rarity badge and atomic global spin counter integration.
-- [ ] 02-03: Dish library page (`/dishes`) with search, filter tabs, and responsive grid display.
+- [x] 02-01: Spin engine with category tabs, budget slider/selector, and client-side randomizer logic.
+- [x] 02-02: Dish result card component with subtle rarity badge and atomic global spin counter integration.
+- [x] 02-03: Dish library page (`/dishes`) with search, filter tabs, and responsive grid display.
 
 ### Phase 3: 4 Animated Picker Modes & Visual Redesign
 **Goal**: Build the 4 swappable picker presentation modes with Motion animations, user mode switcher, and clean minimal food-app redesign.
@@ -116,7 +116,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation, Database & Seed Data | 3/3 | Complete | 2026-09-13 |
-| 2. Core Public Experience & Spin Engine | 0/3 | Not started | - |
+| 2. Core Public Experience & Spin Engine | 3/3 | Complete | 2026-09-13 |
 | 3. 4 Animated Picker Modes & Visual Redesign | 0/3 | Not started | - |
 | 4. Browser Personalization & Fun Extras | 0/3 | Not started | - |
 | 5. Admin CMS & Content Management | 0/3 | Not started | - |
