@@ -59,14 +59,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Admin CMS & Authentication (CMS)
 
-- [ ] **CMS-01**: Admin can log in securely via email and password at `/admin/login` using Better Auth
-- [ ] **CMS-02**: Unauthenticated visitors are blocked from accessing any `/admin` route or administrative Server Action
-- [ ] **CMS-03**: Admin can view dashboard statistics including total global spins and dish catalog counts
-- [ ] **CMS-04**: Admin can CRUD dishes: title, subtitle, price, category, rarity tier, diet tags, and active status
-- [ ] **CMS-05**: Admin can upload dish thumbnail images via Vercel Blob storage
-- [ ] **CMS-06**: Admin can manage dish categories and top-level filter tabs
-- [ ] **CMS-07**: Admin can edit Quẻ trưa fortune entries and daily advice text
-- [ ] **CMS-08**: Admin can configure site settings: default picker presentation mode, homepage copy, and SEO meta tags
+- [x] **CMS-01**: Admin can log in securely via email and password at `/admin/login` using Better Auth
+- [x] **CMS-02**: Unauthenticated visitors are blocked from accessing any `/admin` route or administrative Server Action
+- [x] **CMS-03**: Admin can view dashboard statistics including total global spins and dish catalog counts
+- [x] **CMS-04**: Admin can CRUD dishes: title, subtitle, price, category, rarity tier, diet tags, and active status
+- [x] **CMS-05**: Admin can upload dish thumbnail images via Vercel Blob storage
+- [x] **CMS-06**: Admin can manage dish categories and top-level filter tabs
+- [x] **CMS-07**: Admin can edit Quẻ trưa fortune entries and daily advice text
+- [x] **CMS-08**: Admin can configure site settings: default picker presentation mode, homepage copy, and SEO meta tags
 
 ### Data Seeding & Architecture (DATA)
 
@@ -135,14 +135,14 @@ Which phases cover which requirements. Populated during roadmap creation.
 | EXTR-03 | Phase 4 | Complete |
 | EXTR-04 | Phase 4 | Complete |
 | EXTR-05 | Phase 1 | Complete |
-| CMS-01 | Phase 5 | Pending |
-| CMS-02 | Phase 5 | Pending |
-| CMS-03 | Phase 5 | Pending |
-| CMS-04 | Phase 5 | Pending |
-| CMS-05 | Phase 5 | Pending |
-| CMS-06 | Phase 5 | Pending |
-| CMS-07 | Phase 5 | Pending |
-| CMS-08 | Phase 5 | Pending |
+| CMS-01 | Phase 5 | Complete |
+| CMS-02 | Phase 5 | Complete |
+| CMS-03 | Phase 5 | Complete |
+| CMS-04 | Phase 5 | Complete |
+| CMS-05 | Phase 5 | Complete |
+| CMS-06 | Phase 5 | Complete |
+| CMS-07 | Phase 5 | Complete |
+| CMS-08 | Phase 5 | Complete |
 | DATA-01 | Phase 1 | Complete |
 | DATA-02 | Phase 1 | Complete |
 | DATA-03 | Phase 1 | Complete |
