@@ -1,6 +1,6 @@
 import type { Dish } from "@/db/schema";
 
-export type PickerMode = "cards" | "slot" | "random";
+export type PickerMode = "cards" | "slot";
 
 export interface PickerModeProps {
   candidates: Dish[];

@@ -56,7 +56,7 @@ export function SpinEngine({
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_MODE_KEY) as PickerMode | null;
-      if (saved && ["cards", "slot", "random"].includes(saved)) {
+      if (saved && ["cards", "slot"].includes(saved)) {
         setActiveMode(saved);
       }
     } catch {}
@@ -203,8 +203,8 @@ export function SpinEngine({
       {/* Filter Control Box */}
       <div className="w-full max-w-4xl rounded-2xl border border-stone-200/80 bg-white/95 p-3.5 shadow-2xs dark:border-stone-800 dark:bg-stone-900/95 sm:p-4">
         {/* 1. Domain Selector */}
-        <fieldset className="flex flex-col gap-1.5">
-          <legend id="domain-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200">
+        <fieldset className="flex flex-col">
+          <legend id="domain-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200 mb-2">
             1. Bạn đang phân vân điều gì?
           </legend>
           <div
@@ -243,8 +243,8 @@ export function SpinEngine({
 
         {/* 2. Sub-categories (if available) */}
         {availableCategories.length > 0 && selectedDomain !== "all" && (
-          <fieldset className="mt-2.5 flex flex-col gap-1.5">
-            <legend id="category-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200">
+          <fieldset className="mt-3 flex flex-col">
+            <legend id="category-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200 mb-2">
               Phân loại chi tiết
             </legend>
             <div
@@ -294,8 +294,8 @@ export function SpinEngine({
         )}
 
         {/* 3. Budget / Cost Chips */}
-        <fieldset className="mt-2.5 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between">
+        <fieldset className="mt-3 flex flex-col">
+          <div className="flex items-center justify-between mb-2">
             <legend id="budget-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200">
               2. Chi phí / Ngân sách dự kiến
             </legend>
@@ -331,8 +331,8 @@ export function SpinEngine({
           </div>
         </fieldset>
 
-        {/* Big Action CTA Button */}
-        <div className="mt-3 flex justify-center">
+        {/* Compact Action CTA Button */}
+        <div className="mt-3.5 flex justify-center">
           {candidates.length > 0 ? (
             <button
               type="button"
@@ -340,30 +340,22 @@ export function SpinEngine({
               aria-busy={isSpinning}
               onClick={handleSpin}
               className={cn(
-                "group relative flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 py-3 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white shadow-md shadow-orange-500/25 transition-all hover:from-orange-700 hover:to-amber-700 hover:shadow-lg hover:shadow-orange-500/35 active:scale-98 focus-visible:outline-2 focus-visible:outline-orange-500",
+                "group relative inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 px-6 py-2 sm:py-2.5 text-xs font-extrabold uppercase tracking-wide text-white shadow-sm shadow-orange-500/25 transition-all hover:from-orange-700 hover:to-amber-700 hover:shadow-md hover:shadow-orange-500/35 active:scale-98 focus-visible:outline-2 focus-visible:outline-orange-500",
                 isSpinning && "cursor-not-allowed opacity-80"
               )}
             >
               {isSpinning ? (
                 <>
-                  <RefreshCw className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  <span>
-                    {activeMode === "cards"
-                      ? "Đang xào bài..."
-                      : activeMode === "slot"
-                      ? "Đang quay băng chuyền..."
-                      : "Đang chọn ngẫu nhiên..."}
-                  </span>
+                  <RefreshCw className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
+                  <span>Đang chọn...</span>
                 </>
               ) : (
                 <>
-                  <Dices className="h-4.5 w-4.5 transition-transform group-hover:rotate-180" aria-hidden="true" />
+                  <Dices className="h-4 w-4 transition-transform group-hover:rotate-180" aria-hidden="true" />
                   <span>
                     {activeMode === "cards"
-                      ? "XÀO BÀI CHỌN NGAY"
-                      : activeMode === "slot"
-                      ? "QUAY VÒNG QUYẾT ĐỊNH"
-                      : "CHỌN NGẪU NHIÊN NGAY"}
+                      ? "Xào bài chọn ngay"
+                      : "Quay chọn ngay"}
                   </span>
                 </>
               )}

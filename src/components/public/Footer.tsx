@@ -11,7 +11,7 @@ export function Footer() {
             <Heart className="h-3.5 w-3.5 fill-orange-500 text-orange-500" aria-label="tình cảm" />
           </p>
           <p className="text-[11px] text-stone-500 dark:text-stone-400">
-            Tùy Là Được • Vòng quay quyết định đa năng v2.0
+            Tùy Là Được • Vòng quay quyết định đa năng v1.0
           </p>
         </div>
 

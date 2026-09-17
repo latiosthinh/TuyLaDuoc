@@ -12,7 +12,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="flex flex-col items-center justify-center text-center">
+    <div className="flex flex-1 flex-col items-center justify-around text-center w-full">
       <h1 className="sr-only">Tùy Là Được — Vòng quay quyết định mọi thứ</h1>
       <div className="w-full flex justify-center">
         <SpinEngine

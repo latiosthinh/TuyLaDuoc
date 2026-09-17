@@ -663,7 +663,7 @@ export function CardShuffle({
 
   return (
     <div
-      className={`relative flex w-full flex-col items-center justify-center select-none ${
+      className={`relative flex w-full flex-col items-center justify-center select-none overflow-x-clip ${
         className || ""
       }`}
     >

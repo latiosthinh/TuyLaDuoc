@@ -65,7 +65,7 @@ export function Header({
                   Tùy Là Được
                 </span>
                 <span className="rounded-full bg-orange-100 px-1.5 py-0.2 text-[9px] font-semibold text-orange-700 dark:bg-orange-950/80 dark:text-orange-400">
-                  v2.0
+                  v1.0
                 </span>
               </div>
               <span className="hidden text-[10px] text-stone-500 sm:block dark:text-stone-400">
