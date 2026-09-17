@@ -4,11 +4,10 @@ import React, { useState, useMemo, useTransition, useCallback, useEffect } from 
 import type { Dish, Category } from "@/db/schema";
 import type { PickerMode } from "@/components/pickers/types";
 import { PickerContainer } from "@/components/pickers/PickerContainer";
-import { CustomListModal } from "./CustomListModal";
 import { WinnerModal } from "./WinnerModal";
 import { useCustomList } from "@/hooks/use-custom-list";
 import { recordSpinAction } from "@/app/actions/spin";
-import { Dices, Sparkles, AlertCircle, RefreshCw, Box, Compass, Utensils, Film, Activity, CheckSquare } from "lucide-react";
+import { Dices, AlertCircle, RefreshCw, Compass, Utensils, Film, Activity, CheckSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SpinEngineProps {
@@ -48,11 +47,10 @@ export function SpinEngine({
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [spinCount, setSpinCount] = useState<number>(initialSpinCount);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isWinnerModalOpen, setIsWinnerModalOpen] = useState<boolean>(false);
   const [, startTransition] = useTransition();
 
-  const { customDishes, addDish, removeDish } = useCustomList();
+  const { customDishes } = useCustomList();
 
   // Load saved picker mode from localStorage
   useEffect(() => {
@@ -119,7 +117,12 @@ export function SpinEngine({
 
     startTransition(async () => {
       const updated = await recordSpinAction();
-      if (updated > 0) setSpinCount(updated);
+      if (updated > 0) {
+        setSpinCount(updated);
+        window.dispatchEvent(new CustomEvent("spin-count-increment", { detail: updated }));
+      } else {
+        window.dispatchEvent(new CustomEvent("spin-count-increment", { detail: spinCount + 1 }));
+      }
     });
 
     const duration = activeMode === "slot" ? 5300 : 3300;
@@ -128,7 +131,7 @@ export function SpinEngine({
       setIsSpinning(false);
       setIsWinnerModalOpen(true);
     }, duration);
-  }, [candidates, isSpinning, activeMode]);
+  }, [candidates, isSpinning, activeMode, spinCount]);
 
   const handleManualSelect = (dish: Dish) => {
     setSelectedDish(dish);
@@ -136,7 +139,7 @@ export function SpinEngine({
   };
 
   return (
-    <div className="flex w-full max-w-6xl flex-col items-center mx-auto px-2 sm:px-4">
+    <div className="flex w-full max-w-5xl flex-col items-center mx-auto px-1 sm:px-3">
       {/* Screen Reader Live Announcement */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
         {isSpinning
@@ -146,33 +149,12 @@ export function SpinEngine({
           : ""}
       </div>
 
-      {/* Top action bar: Counter & Custom list button */}
-      <div className="mb-6 flex flex-wrap items-center justify-center gap-3">
-        <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/80 bg-orange-50/90 px-4 py-1.5 text-xs font-bold text-orange-800 shadow-2xs dark:border-orange-900/60 dark:bg-orange-950/50 dark:text-orange-300">
-          <Sparkles className="h-4 w-4 text-orange-600 dark:text-orange-400" aria-hidden="true" />
-          <span>Lượt quay toàn trạm:</span>
-          <span className="font-mono text-sm font-extrabold text-orange-600 dark:text-orange-400">
-            {spinCount.toLocaleString("vi-VN")}
-          </span>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => setIsModalOpen(true)}
-          aria-label={`Mở hòm lựa chọn của tôi, hiện có ${customDishes.length} mục`}
-          className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-4 py-1.5 text-xs font-bold text-stone-700 shadow-2xs transition-all hover:border-orange-300 hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-orange-500 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300 dark:hover:border-orange-900"
-        >
-          <Box className="h-4 w-4 text-orange-500" aria-hidden="true" />
-          <span>Hòm của tôi ({customDishes.length})</span>
-        </button>
-      </div>
-
       {/* Pool Toggle: Global vs Personal */}
       {customDishes.length > 0 && (
         <div
           role="radiogroup"
           aria-label="Nguồn dữ liệu lựa chọn"
-          className="mb-6 inline-flex rounded-xl border border-stone-200 bg-stone-100 p-1 dark:border-stone-800 dark:bg-stone-900"
+          className="mb-2.5 inline-flex rounded-xl border border-stone-200/80 bg-stone-100 p-1 dark:border-stone-800 dark:bg-stone-900"
         >
           <button
             type="button"
@@ -180,9 +162,9 @@ export function SpinEngine({
             aria-checked={!usePersonalPool}
             onClick={() => setUsePersonalPool(false)}
             className={cn(
-              "rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
+              "rounded-lg px-3 py-1 text-xs font-semibold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
               !usePersonalPool
-                ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400"
+                ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400 font-bold"
                 : "text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-200"
             )}
           >
@@ -194,9 +176,9 @@ export function SpinEngine({
             aria-checked={usePersonalPool}
             onClick={() => setUsePersonalPool(true)}
             className={cn(
-              "rounded-lg px-3.5 py-1.5 text-xs font-bold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
+              "rounded-lg px-3 py-1 text-xs font-semibold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
               usePersonalPool
-                ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400"
+                ? "bg-white text-orange-600 shadow-2xs dark:bg-stone-800 dark:text-orange-400 font-bold"
                 : "text-stone-600 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-200"
             )}
           >
@@ -206,7 +188,7 @@ export function SpinEngine({
       )}
 
       {/* Active Interactive Stage */}
-      <div className="mb-10 w-full">
+      <div className="mb-3 w-full">
         <PickerContainer
           activeMode={activeMode}
           onModeChange={handleModeChange}
@@ -219,16 +201,16 @@ export function SpinEngine({
       </div>
 
       {/* Filter Control Box */}
-      <div className="w-full max-w-4xl rounded-3xl border border-stone-200/80 bg-white p-6 shadow-sm dark:border-stone-800/80 dark:bg-stone-900 sm:p-8">
+      <div className="w-full max-w-4xl rounded-2xl border border-stone-200/80 bg-white/95 p-3.5 shadow-2xs dark:border-stone-800 dark:bg-stone-900/95 sm:p-4">
         {/* 1. Domain Selector */}
-        <fieldset className="flex flex-col gap-2.5">
+        <fieldset className="flex flex-col gap-1.5">
           <legend id="domain-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200">
             1. Bạn đang phân vân điều gì?
           </legend>
           <div
             role="radiogroup"
             aria-labelledby="domain-heading"
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap gap-1.5"
           >
             {DOMAIN_OPTIONS.map((opt) => {
               const Icon = opt.icon;
@@ -245,9 +227,9 @@ export function SpinEngine({
                     setSelectedDish(null);
                   }}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
+                    "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
                     isSelected
-                      ? "bg-orange-600 text-white shadow-xs"
+                      ? "bg-orange-600 text-white shadow-2xs font-bold"
                       : "bg-stone-100 text-stone-700 hover:bg-stone-200 dark:bg-stone-800 dark:text-stone-300 dark:hover:bg-stone-700"
                   )}
                 >
@@ -261,14 +243,14 @@ export function SpinEngine({
 
         {/* 2. Sub-categories (if available) */}
         {availableCategories.length > 0 && selectedDomain !== "all" && (
-          <fieldset className="mt-5 flex flex-col gap-2.5">
+          <fieldset className="mt-2.5 flex flex-col gap-1.5">
             <legend id="category-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200">
               Phân loại chi tiết
             </legend>
             <div
               role="radiogroup"
               aria-labelledby="category-heading"
-              className="flex flex-wrap gap-2"
+              className="flex flex-wrap gap-1.5"
             >
               <button
                 type="button"
@@ -279,13 +261,13 @@ export function SpinEngine({
                   setSelectedDish(null);
                 }}
                 className={cn(
-                  "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
+                  "rounded-lg px-2.5 py-1 text-xs font-medium transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
                   selectedCategory === "all"
-                    ? "border border-orange-500 bg-orange-50 text-orange-700 dark:bg-orange-950/50 dark:text-orange-300"
+                    ? "border border-orange-500 bg-orange-50 font-semibold text-orange-700 dark:bg-orange-950/50 dark:text-orange-300"
                     : "border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-800 dark:text-stone-300"
                 )}
               >
-                Tất cả {availableCategories.length} mục
+                Tất cả ({availableCategories.length})
               </button>
               {availableCategories.map((c) => (
                 <button
@@ -298,9 +280,9 @@ export function SpinEngine({
                     setSelectedDish(null);
                   }}
                   className={cn(
-                    "rounded-lg px-3 py-1.5 text-xs font-semibold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
+                    "rounded-lg px-2.5 py-1 text-xs font-medium transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
                     selectedCategory === c.id
-                      ? "border border-orange-500 bg-orange-50 text-orange-700 dark:bg-orange-950/50 dark:text-orange-300"
+                      ? "border border-orange-500 bg-orange-50 font-semibold text-orange-700 dark:bg-orange-950/50 dark:text-orange-300"
                       : "border border-stone-200 bg-white text-stone-600 hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-800 dark:text-stone-300"
                   )}
                 >
@@ -312,19 +294,19 @@ export function SpinEngine({
         )}
 
         {/* 3. Budget / Cost Chips */}
-        <fieldset className="mt-6 flex flex-col gap-2.5">
+        <fieldset className="mt-2.5 flex flex-col gap-1.5">
           <div className="flex items-center justify-between">
             <legend id="budget-heading" className="text-left text-xs font-bold text-stone-800 dark:text-stone-200">
               2. Chi phí / Ngân sách dự kiến
             </legend>
-            <span className="text-xs font-medium text-stone-600 dark:text-stone-400">
+            <span className="text-[11px] font-medium text-stone-500 dark:text-stone-400">
               {candidates.length} lựa chọn phù hợp
             </span>
           </div>
           <div
             role="radiogroup"
             aria-labelledby="budget-heading"
-            className="flex flex-wrap gap-2"
+            className="flex flex-wrap gap-1.5"
           >
             {BUDGET_TIERS.map((tier, idx) => (
               <button
@@ -337,9 +319,9 @@ export function SpinEngine({
                   setSelectedDish(null);
                 }}
                 className={cn(
-                  "rounded-xl px-4 py-2 text-xs font-bold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
+                  "rounded-lg px-3 py-1 text-xs font-semibold transition-all focus-visible:outline-2 focus-visible:outline-orange-500",
                   budgetIndex === idx
-                    ? "border border-orange-500 bg-orange-50 text-orange-700 shadow-2xs dark:bg-orange-950/60 dark:text-orange-300"
+                    ? "border border-orange-500 bg-orange-50 font-bold text-orange-700 shadow-2xs dark:bg-orange-950/60 dark:text-orange-300"
                     : "border border-stone-200/80 bg-white text-stone-600 hover:bg-stone-50 dark:border-stone-800 dark:bg-stone-800/80 dark:text-stone-300"
                 )}
               >
@@ -350,7 +332,7 @@ export function SpinEngine({
         </fieldset>
 
         {/* Big Action CTA Button */}
-        <div className="mt-8">
+        <div className="mt-3 flex justify-center">
           {candidates.length > 0 ? (
             <button
               type="button"
@@ -358,16 +340,16 @@ export function SpinEngine({
               aria-busy={isSpinning}
               onClick={handleSpin}
               className={cn(
-                "group relative flex w-full items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 py-4 text-base font-extrabold text-white shadow-lg transition-all hover:from-orange-700 hover:to-amber-700 hover:shadow-xl active:scale-98 focus-visible:outline-2 focus-visible:outline-orange-500",
+                "group relative flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 py-3 text-xs sm:text-sm font-extrabold uppercase tracking-wide text-white shadow-md shadow-orange-500/25 transition-all hover:from-orange-700 hover:to-amber-700 hover:shadow-lg hover:shadow-orange-500/35 active:scale-98 focus-visible:outline-2 focus-visible:outline-orange-500",
                 isSpinning && "cursor-not-allowed opacity-80"
               )}
             >
               {isSpinning ? (
                 <>
-                  <RefreshCw className="h-5 w-5 animate-spin" aria-hidden="true" />
+                  <RefreshCw className="h-4 w-4 animate-spin" aria-hidden="true" />
                   <span>
                     {activeMode === "cards"
-                      ? "Đang xào bài tìm kết quả..."
+                      ? "Đang xào bài..."
                       : activeMode === "slot"
                       ? "Đang quay băng chuyền..."
                       : "Đang chọn ngẫu nhiên..."}
@@ -375,7 +357,7 @@ export function SpinEngine({
                 </>
               ) : (
                 <>
-                  <Dices className="h-5 w-5 transition-transform group-hover:rotate-180" aria-hidden="true" />
+                  <Dices className="h-4.5 w-4.5 transition-transform group-hover:rotate-180" aria-hidden="true" />
                   <span>
                     {activeMode === "cards"
                       ? "XÀO BÀI CHỌN NGAY"
@@ -387,7 +369,7 @@ export function SpinEngine({
               )}
             </button>
           ) : (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-stone-300 p-6 text-center dark:border-stone-700">
+            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-stone-300 p-4 text-center dark:border-stone-700">
               <div className="flex items-center gap-1.5 text-xs font-semibold text-stone-700 dark:text-stone-300">
                 <AlertCircle className="h-4 w-4 text-amber-500" aria-hidden="true" />
                 <span>Không có lựa chọn nào phù hợp với bộ lọc hiện tại.</span>
@@ -399,7 +381,7 @@ export function SpinEngine({
                   setSelectedCategory("all");
                   setBudgetIndex(0);
                 }}
-                className="mt-2 text-xs font-bold text-orange-600 underline hover:text-orange-700 focus-visible:outline-2 focus-visible:outline-orange-500 rounded-xs dark:text-orange-400"
+                className="mt-1.5 text-xs font-bold text-orange-600 underline hover:text-orange-700 focus-visible:outline-2 focus-visible:outline-orange-500 rounded-xs dark:text-orange-400"
               >
                 Đặt lại toàn bộ bộ lọc
               </button>
@@ -414,16 +396,6 @@ export function SpinEngine({
         onClose={() => setIsWinnerModalOpen(false)}
         dish={selectedDish}
         onRespin={handleSpin}
-      />
-
-      {/* Modal Custom List */}
-      <CustomListModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        customDishes={customDishes}
-        categories={categories}
-        onAddDish={addDish}
-        onRemoveDish={removeDish}
       />
     </div>
   );

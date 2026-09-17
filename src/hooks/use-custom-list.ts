@@ -10,23 +10,39 @@ export function useCustomList() {
   const [customDishes, setCustomDishes] = useState<Dish[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
+  const syncFromStorage = () => {
     try {
       const data = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
       if (data) {
         setCustomDishes(JSON.parse(data));
+      } else {
+        setCustomDishes([]);
       }
     } catch {
       // fallback on error
     } finally {
       setIsLoaded(true);
     }
+  };
+
+  useEffect(() => {
+    syncFromStorage();
+
+    const handleCustomChange = () => syncFromStorage();
+    window.addEventListener("custom-dishes-changed", handleCustomChange);
+    window.addEventListener("storage", handleCustomChange);
+
+    return () => {
+      window.removeEventListener("custom-dishes-changed", handleCustomChange);
+      window.removeEventListener("storage", handleCustomChange);
+    };
   }, []);
 
   const saveDishes = (newDishes: Dish[]) => {
     setCustomDishes(newDishes);
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(newDishes));
+      window.dispatchEvent(new Event("custom-dishes-changed"));
     } catch {
       // ignore quota
     }

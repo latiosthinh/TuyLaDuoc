@@ -176,7 +176,7 @@ export function SlotReel({
         </div>
 
         {/* Viewport Strip */}
-        <div ref={containerRef} className="relative h-[255px] w-full overflow-hidden bg-[#16181d]">
+        <div ref={containerRef} className="relative h-[210px] w-full overflow-hidden bg-[#16181d]">
           {/* Laser Pointer Center Needle with top and bottom arrows */}
           <div className="pointer-events-none absolute inset-y-0 left-1/2 z-30 w-[2px] -translate-x-1/2 bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.8)]">
             {/* Top Pointer Arrow */}
@@ -200,7 +200,7 @@ export function SlotReel({
           {/* Running Track */}
           <div
             ref={trackRef}
-            className="flex items-center h-full absolute top-0 left-0 will-change-transform py-3"
+            className="flex items-center h-full absolute top-0 left-0 will-change-transform py-2"
             style={{ gap: `${cardGap}px` }}
           >
             {reelItems.map((dish, idx) => {
@@ -211,18 +211,18 @@ export function SlotReel({
               return (
                 <div
                   key={`${dish.id}-${idx}`}
-                  className={`group relative flex h-[218px] flex-col overflow-hidden rounded-xl bg-[#20232a] transition-all duration-300 shrink-0 select-none ${
+                  className={`group relative flex h-[185px] flex-col overflow-hidden rounded-xl bg-[#20232a] transition-all duration-300 shrink-0 select-none ${
                     isWinnerLanded
                       ? "ring-2 ring-amber-400 scale-[1.03] shadow-[0_0_24px_rgba(251,191,36,0.4)] z-10"
                       : "opacity-95 hover:opacity-100"
                   }`}
                   style={{
                     width: `${cardWidth}px`,
-                    borderBottom: `4px solid ${rarityColor}`,
+                    borderBottom: `3px solid ${rarityColor}`,
                   }}
                 >
                   {/* Dish Image */}
-                  <div className="relative h-[142px] w-full overflow-hidden bg-[#15171c]">
+                  <div className="relative h-[115px] w-full overflow-hidden bg-[#15171c]">
                     {dish.imageUrl ? (
                       <Image
                         src={dish.imageUrl}

@@ -145,19 +145,19 @@ function TinderCardItem({
             )}
 
             {/* Dish Image Section */}
-            <div className="relative h-[65%] w-full overflow-hidden bg-stone-100 dark:bg-stone-800">
+            <div className="relative h-[58%] w-full overflow-hidden bg-stone-100 dark:bg-stone-800">
               {dish.imageUrl ? (
                 <Image
                   src={dish.imageUrl}
                   alt={dish.name}
                   fill
                   priority={isTop}
-                  sizes="(max-width: 768px) 340px, 420px"
+                  sizes="(max-width: 768px) 300px, 340px"
                   className="object-cover"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-100 to-amber-50 text-orange-400 dark:from-stone-800 dark:to-stone-900">
-                  <Utensils className="h-16 w-16 opacity-30" />
+                  <Utensils className="h-12 w-12 opacity-30" />
                 </div>
               )}
 
@@ -165,19 +165,19 @@ function TinderCardItem({
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
 
               {/* Top Badges */}
-              <div className="absolute top-4 inset-x-4 z-10 flex items-center justify-between">
-                <span className="rounded-full bg-black/55 px-3 py-1 text-[11px] font-bold text-white backdrop-blur-md">
+              <div className="absolute top-3 inset-x-3 z-10 flex items-center justify-between">
+                <span className="rounded-full bg-black/55 px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-md">
                   Gợi ý hôm nay
                 </span>
                 <RarityBadge rarity={dish.rarity} />
               </div>
 
               {/* Price & Name on Image */}
-              <div className="absolute bottom-4 left-4 z-10 flex flex-col text-left">
-                <span className="text-[10px] font-bold text-orange-200 uppercase tracking-wider drop-shadow-sm">
+              <div className="absolute bottom-3 left-3 z-10 flex flex-col text-left">
+                <span className="text-[9px] font-bold text-orange-200 uppercase tracking-wider drop-shadow-sm">
                   Chi Phí Dự Kiến
                 </span>
-                <span className="text-2xl font-black text-white drop-shadow-md">
+                <span className="text-lg font-black text-white drop-shadow-md">
                   {dish.price > 0 ? formatVND(dish.price) : "Miễn phí"}
                 </span>
               </div>
@@ -187,36 +187,36 @@ function TinderCardItem({
                 type="button"
                 onClick={handleManualFlip}
                 aria-label="Lật thẻ xem chi tiết lựa chọn"
-                className="absolute bottom-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/25 text-white shadow-md backdrop-blur-md transition-transform hover:scale-110 active:scale-95 focus-visible:outline-2 focus-visible:outline-white"
+                className="absolute bottom-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/25 text-white shadow-md backdrop-blur-md transition-transform hover:scale-110 active:scale-95 focus-visible:outline-2 focus-visible:outline-white"
                 title="Lật thẻ xem chi tiết"
               >
-                <Info className="h-4 w-4" aria-hidden="true" />
+                <Info className="h-3.5 w-3.5" aria-hidden="true" />
               </button>
             </div>
 
             {/* Bottom Card Copy */}
-            <div className="flex flex-1 flex-col justify-between p-5 text-left bg-white dark:bg-stone-900">
+            <div className="flex flex-1 flex-col justify-between p-3 sm:p-3.5 text-left bg-white dark:bg-stone-900">
               <div>
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400">
-                  <Sparkles className="h-3.5 w-3.5" />
+                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-orange-600 dark:text-orange-400">
+                  <Sparkles className="h-3 w-3" />
                   <span>Món ngon hấp dẫn</span>
                 </div>
 
-                <h3 className="mt-1 text-xl sm:text-2xl font-black tracking-tight text-stone-900 line-clamp-1 dark:text-stone-100">
+                <h3 className="mt-0.5 text-sm sm:text-base font-bold tracking-tight text-stone-900 line-clamp-1 dark:text-stone-100">
                   {dish.name}
                 </h3>
 
                 {dish.subtitle && (
-                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-500 dark:text-stone-400">
+                  <p className="mt-0.5 line-clamp-1 text-[11px] leading-snug text-stone-500 dark:text-stone-400">
                     {dish.subtitle}
                   </p>
                 )}
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-stone-100 text-[11px] text-stone-500 dark:text-stone-400 dark:border-stone-800">
-                <span>← Vuốt trái: Bỏ qua</span>
+              <div className="flex items-center justify-between pt-1.5 border-t border-stone-100 text-[10px] text-stone-500 dark:text-stone-400 dark:border-stone-800">
+                <span>← Vuốt trái: Bỏ</span>
                 <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-                  Vuốt phải: Chốt đơn →
+                  Vuốt phải: Chốt →
                 </span>
               </div>
             </div>
@@ -356,7 +356,7 @@ function CardShuffleStage({
     : activeDish || selectedDish;
 
   return (
-    <div className="relative h-[500px] w-[320px] sm:h-[540px] sm:w-[370px] md:w-[380px] [perspective:1400px]">
+    <div className="relative h-[360px] w-[260px] sm:h-[390px] sm:w-[290px] md:h-[400px] md:w-[300px] [perspective:1400px]">
       {/* Ambient warm glow behind deck */}
       <div className="absolute inset-4 rounded-full bg-orange-500/15 blur-3xl pointer-events-none" />
 
@@ -513,19 +513,19 @@ function CardShuffleStage({
         {displayDish && (
           <>
             {/* Dish Image Section */}
-            <div className="relative h-[65%] w-full overflow-hidden bg-stone-100 dark:bg-stone-800">
+            <div className="relative h-[58%] w-full overflow-hidden bg-stone-100 dark:bg-stone-800">
               {displayDish.imageUrl ? (
                 <Image
                   src={displayDish.imageUrl}
                   alt={displayDish.name}
                   fill
                   priority
-                  sizes="(max-width: 768px) 340px, 420px"
+                  sizes="(max-width: 768px) 300px, 340px"
                   className="object-cover"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-orange-100 to-amber-50 text-orange-400 dark:from-stone-800 dark:to-stone-900">
-                  <Utensils className="h-16 w-16 opacity-30" />
+                  <Utensils className="h-12 w-12 opacity-30" />
                 </div>
               )}
 
@@ -533,9 +533,9 @@ function CardShuffleStage({
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
 
               {/* Top Badges */}
-              <div className="absolute top-4 inset-x-4 z-10 flex items-center justify-between">
+              <div className="absolute top-3 inset-x-3 z-10 flex items-center justify-between">
                 <span
-                  className={`rounded-full px-3 py-1 text-[11px] font-bold text-white backdrop-blur-md transition-colors ${
+                  className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-md transition-colors ${
                     phase === "deal"
                       ? "bg-orange-600/90 shadow-md animate-pulse"
                       : "bg-black/55"
@@ -547,39 +547,39 @@ function CardShuffleStage({
               </div>
 
               {/* Price on Image */}
-              <div className="absolute bottom-4 left-4 z-10 flex flex-col text-left">
-                <span className="text-[10px] font-bold text-orange-200 uppercase tracking-wider drop-shadow-sm">
+              <div className="absolute bottom-3 left-3 z-10 flex flex-col text-left">
+                <span className="text-[9px] font-bold text-orange-200 uppercase tracking-wider drop-shadow-sm">
                   Giá Dự Kiến
                 </span>
-                <span className="text-2xl font-black text-white drop-shadow-md">
+                <span className="text-lg font-black text-white drop-shadow-md">
                   {formatVND(displayDish.price)}
                 </span>
               </div>
             </div>
 
             {/* Bottom Card Copy */}
-            <div className="flex flex-1 flex-col justify-between p-5 text-left bg-white dark:bg-stone-900">
+            <div className="flex flex-1 flex-col justify-between p-3 sm:p-3.5 text-left bg-white dark:bg-stone-900">
               <div>
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400">
-                  <Sparkles className="h-3.5 w-3.5" />
+                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-orange-600 dark:text-orange-400">
+                  <Sparkles className="h-3 w-3" />
                   <span>{phase === "deal" ? "Gợi ý chuẩn gu hôm nay" : "Đang trộn thẻ..."}</span>
                 </div>
 
-                <h3 className="mt-1 text-xl sm:text-2xl font-black tracking-tight text-stone-900 line-clamp-1 dark:text-stone-100">
+                <h3 className="mt-0.5 text-sm sm:text-base font-bold tracking-tight text-stone-900 line-clamp-1 dark:text-stone-100">
                   {displayDish.name}
                 </h3>
 
                 {displayDish.subtitle && (
-                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-500 dark:text-stone-400">
+                  <p className="mt-0.5 line-clamp-1 text-[11px] leading-snug text-stone-500 dark:text-stone-400">
                     {displayDish.subtitle}
                   </p>
                 )}
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-stone-100 text-[11px] text-stone-600 dark:text-stone-300 dark:border-stone-800">
+              <div className="flex items-center justify-between pt-1.5 border-t border-stone-100 text-[10px] text-stone-600 dark:text-stone-300 dark:border-stone-800">
                 <span>Bộ bài lựa chọn</span>
                 <span className="font-semibold text-orange-600 dark:text-orange-400">
-                  {phase === "deal" ? "Đã sẵn sàng! 🎉" : "Đang xào ngẫu nhiên..."}
+                  {phase === "deal" ? "Đã sẵn sàng! 🎉" : "Đang xào..."}
                 </span>
               </div>
             </div>
@@ -671,7 +671,7 @@ export function CardShuffle({
       {isSpinning ? (
         <CardShuffleStage candidates={candidates} selectedDish={selectedDish} />
       ) : (
-        <div className="relative h-[500px] w-[320px] sm:h-[540px] sm:w-[370px] md:w-[380px]">
+        <div className="relative h-[360px] w-[260px] sm:h-[390px] sm:w-[290px] md:h-[400px] md:w-[300px]">
           {thirdDish && (
             <TinderCardItem
               key={`third-${thirdDish.id}`}
@@ -713,17 +713,17 @@ export function CardShuffle({
       )}
 
       {/* Tinder Action Buttons Bar */}
-      <div className="mt-8 flex items-center justify-center gap-4 sm:gap-6">
+      <div className="mt-3 sm:mt-4 flex items-center justify-center gap-3 sm:gap-4">
         {/* Rewind Button */}
         <button
           type="button"
           onClick={handleRewind}
           disabled={history.length === 0 || isSpinning}
           aria-label="Xem lại lựa chọn trước"
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-600 shadow-md transition-all hover:scale-110 hover:border-amber-300 hover:text-amber-600 disabled:opacity-30 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-amber-500 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300"
+          className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-600 shadow-xs transition-all hover:scale-105 hover:border-amber-300 hover:text-amber-600 disabled:opacity-30 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-amber-500 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300"
           title="Quay lại lựa chọn trước"
         >
-          <RotateCcw className="h-4 w-4" aria-hidden="true" />
+          <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
         </button>
 
         {/* Dislike / Swipe Left (X) */}
@@ -732,10 +732,10 @@ export function CardShuffle({
           onClick={handleSwipeLeft}
           disabled={isSpinning}
           aria-label="Bỏ qua (Đổi lựa chọn)"
-          className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-rose-200 bg-white text-rose-500 shadow-lg transition-all hover:scale-110 hover:bg-rose-50 hover:border-rose-400 active:scale-95 disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-rose-500"
+          className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-rose-200 bg-white text-rose-500 shadow-sm transition-all hover:scale-105 hover:bg-rose-50 hover:border-rose-400 active:scale-95 disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-rose-500"
           title="Bỏ qua (Vuốt trái)"
         >
-          <X className="h-7 w-7 stroke-[2.5]" aria-hidden="true" />
+          <X className="h-5 w-5 stroke-[2.2]" aria-hidden="true" />
         </button>
 
         {/* Super Spin / Random Shuffle Button */}
@@ -744,10 +744,10 @@ export function CardShuffle({
           onClick={onRespin}
           disabled={isSpinning}
           aria-label="Xào bài ngẫu nhiên"
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-tr from-orange-600 to-amber-500 text-white shadow-xl shadow-orange-500/30 transition-all hover:scale-110 hover:shadow-2xl hover:shadow-orange-500/50 active:scale-95 disabled:opacity-60 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-orange-500"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-orange-600 to-amber-500 text-white shadow-md shadow-orange-500/25 transition-all hover:scale-105 hover:shadow-lg hover:shadow-orange-500/40 active:scale-95 disabled:opacity-60 disabled:pointer-events-none focus-visible:outline-2 focus-visible:outline-orange-500"
           title="Xào bài ngẫu nhiên"
         >
-          <Dices className={`h-8 w-8 ${isSpinning ? "animate-spin" : ""}`} aria-hidden="true" />
+          <Dices className={`h-6 w-6 ${isSpinning ? "animate-spin" : ""}`} aria-hidden="true" />
         </button>
 
         {/* Like / Swipe Right (Heart / Pick) */}
@@ -756,10 +756,10 @@ export function CardShuffle({
           onClick={() => topDish && handleSwipeRight(topDish)}
           disabled={isSpinning || !topDish}
           aria-label="Chốt lựa chọn này"
-          className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-emerald-200 bg-white text-emerald-600 shadow-lg transition-all hover:scale-110 hover:bg-emerald-50 hover:border-emerald-400 active:scale-95 disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-emerald-500"
+          className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-emerald-200 bg-white text-emerald-600 shadow-sm transition-all hover:scale-105 hover:bg-emerald-50 hover:border-emerald-400 active:scale-95 disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-emerald-500"
           title="Chốt lựa chọn này (Vuốt phải)"
         >
-          <Heart className="h-7 w-7 stroke-[2.5] fill-emerald-500/20" aria-hidden="true" />
+          <Heart className="h-5 w-5 stroke-[2.2] fill-emerald-500/20" aria-hidden="true" />
         </button>
 
         {/* Search */}
@@ -769,10 +769,10 @@ export function CardShuffle({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Tìm kiếm thông tin về ${topDish.name} (mở tab mới)`}
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-600 shadow-md transition-all hover:scale-110 hover:border-orange-300 hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-orange-500 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-600 shadow-xs transition-all hover:scale-105 hover:border-orange-300 hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-orange-500 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-300"
             title="Khám phá chi tiết"
           >
-            <MapPin className="h-4 w-4 text-orange-500" aria-hidden="true" />
+            <MapPin className="h-3.5 w-3.5 text-orange-500" aria-hidden="true" />
           </a>
         )}
       </div>
