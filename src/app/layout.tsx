@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   title: "Tùy Là Được — Vòng quay quyết định mọi thứ",
   description:
     "Không biết chọn gì? Vòng quay quyết định ngẫu nhiên trong vài giây: Ăn uống, Giải trí, Hoạt động hay bất cứ việc gì bạn phân vân.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Compass, ScrollText, BookOpen } from "lucide-react";
+import { ScrollText, BookOpen } from "lucide-react";
+import { LogoIcon } from "./Logo";
 
 export function Header() {
   return (
@@ -10,8 +11,8 @@ export function Header() {
           className="group flex items-center gap-2.5 rounded-xl focus-visible:outline-2 focus-visible:outline-orange-500"
           aria-label="Trang chủ Tùy Là Được"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-600 text-white shadow-sm transition-transform group-hover:scale-105">
-            <Compass className="h-4 w-4" />
+          <div className="transition-transform duration-200 group-hover:scale-105 shadow-sm rounded-xl">
+            <LogoIcon className="h-9 w-9" size={36} />
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">

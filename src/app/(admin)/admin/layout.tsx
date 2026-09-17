@@ -2,6 +2,7 @@ import Link from "next/link";
 import { verifyAdminSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { logoutAction } from "@/app/actions/auth";
+import { LogoIcon } from "@/components/public/Logo";
 import {
   LayoutDashboard,
   Utensils,
@@ -27,10 +28,8 @@ export default async function AdminLayout({
       {/* Sidebar (only shown if authenticated) */}
       {isAuth ? (
         <aside className="fixed inset-y-0 left-0 z-30 flex w-60 flex-col border-r border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900">
-          <div className="flex h-14 items-center gap-2 border-b border-stone-200 px-6 dark:border-stone-800">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-orange-600 text-white font-bold text-xs">
-              TL
-            </div>
+          <div className="flex h-14 items-center gap-2.5 border-b border-stone-200 px-6 dark:border-stone-800">
+            <LogoIcon className="h-7 w-7 rounded-lg shadow-xs" size={28} />
             <span className="text-sm font-extrabold tracking-tight text-stone-900 dark:text-stone-100">
               Tùy Là Được Admin
             </span>
