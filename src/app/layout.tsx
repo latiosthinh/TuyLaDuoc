@@ -10,9 +10,9 @@ const beVietnamPro = Be_Vietnam_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "Trưa Nay Ăn Gì? — Quay chọn món ngon trưa nay",
+  title: "Tùy Là Được — Vòng quay quyết định mọi thứ",
   description:
-    "Hôm nay chưa biết trưa nay ăn gì? Quay chọn món theo ngân sách và thể loại yêu thích nhanh chóng trong vài giây.",
+    "Không biết chọn gì? Vòng quay quyết định ngẫu nhiên trong vài giây: Ăn uống, Giải trí, Hoạt động hay bất cứ việc gì bạn phân vân.",
 };
 
 export default function RootLayout({

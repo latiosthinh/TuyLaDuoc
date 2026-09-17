@@ -24,6 +24,7 @@ async function seed() {
         id: cat.id,
         name: cat.name,
         tab: cat.tab,
+        domain: cat.domain ?? "food",
         sortOrder: cat.sortOrder,
       })
       .onConflictDoUpdate({
@@ -31,13 +32,14 @@ async function seed() {
         set: {
           name: cat.name,
           tab: cat.tab,
+          domain: cat.domain ?? "food",
           sortOrder: cat.sortOrder,
         },
       });
   }
 
-  // 2. Seed dishes
-  console.log(`- Nạp ${SEED_DISHES.length} món ăn...`);
+  // 2. Seed dishes/items
+  console.log(`- Nạp ${SEED_DISHES.length} mục lựa chọn...`);
   for (const dish of SEED_DISHES) {
     await db
       .insert(dishes)
@@ -47,6 +49,7 @@ async function seed() {
         subtitle: dish.subtitle,
         price: dish.price,
         categoryId: dish.categoryId,
+        domain: dish.domain ?? "food",
         rarity: dish.rarity,
         imageUrl: dish.imageUrl,
         dietTags: JSON.stringify(dish.dietTags),
@@ -59,6 +62,7 @@ async function seed() {
           subtitle: dish.subtitle,
           price: dish.price,
           categoryId: dish.categoryId,
+          domain: dish.domain ?? "food",
           rarity: dish.rarity,
           imageUrl: dish.imageUrl,
           dietTags: JSON.stringify(dish.dietTags),
@@ -95,9 +99,9 @@ async function seed() {
     {
       key: "homepage_tagline",
       value:
-        "Hôm nay chưa biết trưa nay ăn gì? Quay chọn món theo ngân sách và sở thích!",
+        "Vòng quay quyết định mọi thứ — Ăn uống, Giải trí, Hoạt động hay bất cứ điều gì bạn chưa chọn được!",
     },
-    { key: "site_name", value: "Trưa Nay Ăn Gì" },
+    { key: "site_name", value: "Tùy Là Được" },
   ];
 
   for (const setting of defaultSettings) {

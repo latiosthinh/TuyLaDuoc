@@ -3,7 +3,8 @@ import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 export const categories = sqliteTable("categories", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
-  tab: text("tab").notNull(), // mon_chinh | do_uong | an_vat | mon_nhau
+  tab: text("tab").notNull(), // mon_chinh | do_uong | an_vat | mon_nhau | giai_tri | hoat_dong | cong_viec
+  domain: text("domain").default("food").notNull(), // food | entertainment | activity | task
   sortOrder: integer("sort_order").default(0).notNull(),
 });
 
@@ -15,6 +16,7 @@ export const dishes = sqliteTable("dishes", {
   categoryId: text("category_id")
     .notNull()
     .references(() => categories.id),
+  domain: text("domain").default("food").notNull(), // food | entertainment | activity | task
   rarity: text("rarity").notNull().default("QUOC_DAN"), // QUOC_DAN | HIEM | CUC_PHAM | TOI_MAT | DAC_BIET
   imageUrl: text("image_url"),
   dietTags: text("diet_tags").default("[]").notNull(), // JSON string array e.g. ["chay", "healthy"]
@@ -45,8 +47,11 @@ export const counters = sqliteTable("counters", {
   value: integer("value").default(0).notNull(),
 });
 
-export type Dish = typeof dishes.$inferSelect;
-export type NewDish = typeof dishes.$inferInsert;
+export const items = dishes;
+export type Item = typeof dishes.$inferSelect;
+export type NewItem = typeof dishes.$inferInsert;
+export type Dish = Item;
+export type NewDish = NewItem;
 export type Category = typeof categories.$inferSelect;
 export type Fortune = typeof fortunes.$inferSelect;
 export type SiteSetting = typeof siteSettings.$inferSelect;

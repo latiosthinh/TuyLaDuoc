@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import type { Dish } from "@/db/schema";
 
-const STORAGE_KEY = "truanayangi_custom_dishes";
+const STORAGE_KEY = "tuyladuoc_custom_items";
+const LEGACY_STORAGE_KEY = "truanayangi_custom_dishes";
 
 export function useCustomList() {
   const [customDishes, setCustomDishes] = useState<Dish[]>([]);
@@ -11,7 +12,7 @@ export function useCustomList() {
 
   useEffect(() => {
     try {
-      const data = localStorage.getItem(STORAGE_KEY);
+      const data = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
       if (data) {
         setCustomDishes(JSON.parse(data));
       }
@@ -35,6 +36,7 @@ export function useCustomList() {
     const newEntry: Dish = {
       ...dish,
       id: `custom-${Date.now()}`,
+      domain: (dish as any).domain || "food",
       isActive: true,
       dietTags: "[]",
       createdAt: new Date(),

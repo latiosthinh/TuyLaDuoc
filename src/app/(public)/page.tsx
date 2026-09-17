@@ -22,10 +22,10 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center text-center">
       <h1 className="text-3xl font-extrabold tracking-tight text-stone-900 sm:text-4xl lg:text-5xl dark:text-stone-100">
-        Trưa Nay Ăn Gì?
+        Tùy Là Được!
       </h1>
       <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-stone-600 sm:text-base dark:text-stone-300">
-        Lọc theo sở thích, ngân sách và khám phá món trưa tuyệt hảo chỉ sau 1 lượt quay.
+        Khó chọn cứ để vòng quay lo — từ ăn uống, giải trí, đi đâu chơi đến việc cần làm trong ngày.
       </p>
 
       <div className="mt-8 w-full flex justify-center">

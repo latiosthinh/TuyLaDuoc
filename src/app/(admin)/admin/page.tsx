@@ -3,7 +3,7 @@ import { dishes, categories, counters, fortunes } from "@/db/schema";
 import { verifyAdminSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { sql, eq } from "drizzle-orm";
-import { Utensils, FolderTree, Sparkles, Flame, ArrowUpRight } from "lucide-react";
+import { Utensils, FolderTree, ScrollText, Flame, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
 export default async function AdminDashboardPage() {
@@ -37,8 +37,8 @@ export default async function AdminDashboardPage() {
     {
       title: "Quẻ trưa may mắn",
       value: totalFortunes[0]?.count ?? 0,
-      icon: Sparkles,
-      color: "text-purple-600 bg-purple-50 dark:bg-purple-950/40",
+      icon: ScrollText,
+      color: "text-amber-600 bg-amber-50 dark:bg-amber-950/40",
     },
   ];
 

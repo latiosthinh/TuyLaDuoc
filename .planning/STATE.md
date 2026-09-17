@@ -46,12 +46,20 @@ Progress: [██████████] 100%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [2026-09-14]: Rebranded to "Tùy Là Được" multi-domain decision maker with full generic schema support (food, entertainment, activity, task).
+- [2026-09-14]: Implemented WCAG 2.1 AA accessibility remediation (dialog semantics, aria-live announcer, radiogroup states, explicit form labels, contrast fixes).
 - [Init]: Fresh redesign instead of replicating the original gacha game theme.
 - [Init]: Implement all 4 picker modes (Roulette wheel, Card shuffle + flip, Slot reel, Ngẫu hứng random mode).
 - [Init]: Turso (libSQL) preferred with Neon Postgres as fallback; Drizzle ORM for data layer.
 - [Init]: Better Auth email/password credentials for administrative CMS.
 - [Init]: Vietnamese-only UI with Be Vietnam Pro typography.
 - [Init]: Anonymous visitor model with localStorage for personal custom lists.
+
+### Quick Tasks Completed
+
+| Date | Slug | Description | Status |
+|------|------|-------------|--------|
+| 2026-09-14 | rebrand-tuy-la-duoc-and-a11y | Rebrand to "Tùy Là Được" and complete accessibility remediation | complete ✓ |
 
 ### Pending Todos
 

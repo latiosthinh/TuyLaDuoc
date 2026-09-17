@@ -1,181 +1,287 @@
 "use client";
 
-import React, { useMemo, useRef, useState, useEffect } from "react";
-import { motion } from "motion/react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Image from "next/image";
 import type { PickerModeProps } from "./types";
-import { RarityBadge } from "@/components/public/RarityBadge";
+import type { Dish } from "@/db/schema";
 import { formatVND } from "@/lib/utils";
-import { Sparkles, Utensils, MapPin } from "lucide-react";
+import { sounds } from "@/lib/audio";
+import { Volume2, VolumeX, Sparkles, Utensils } from "lucide-react";
+
+const RARITY_COLORS: Record<string, string> = {
+  QUOC_DAN: "#10b981", // Green
+  HIEM: "#3b82f6",     // Blue
+  CUC_PHAM: "#a855f7", // Purple
+  TOI_MAT: "#ec4899",  // Pink
+  DAC_BIET: "#f59e0b", // Gold
+};
 
 export function SlotReel({
   candidates,
   selectedDish,
   isSpinning,
+  onSelectDish,
   className,
 }: PickerModeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [containerWidth, setContainerWidth] = useState<number>(800);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const animFrameRef = useRef<number>(0);
+  const positionRef = useRef<number>(-300);
 
-  // Measure container width for exact centering
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [reelItems, setReelItems] = useState<Dish[]>([]);
+  const [winnerIndex, setWinnerIndex] = useState<number>(-1);
+  const [winningDish, setWinningDish] = useState<Dish | null>(null);
+
+  const cardWidth = 210;
+  const cardGap = 12;
+  const step = cardWidth + cardGap; // 222px
+
+  // Build reel strip when candidates change
   useEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth);
+    if (candidates.length === 0) return;
+    // Pre-populate ~40 items repeating candidates
+    const initial: Dish[] = [];
+    while (initial.length < 45) {
+      initial.push(...candidates);
+    }
+    setReelItems(initial.slice(0, 45));
+  }, [candidates]);
+
+  // Handle spin animation with CS:GO Panorama physics
+  const runSpin = useCallback(
+    (targetDish: Dish) => {
+      if (!containerRef.current || !trackRef.current || reelItems.length === 0) return;
+
+      const viewportWidth = containerRef.current.clientWidth;
+      const targetSlot = 32; // Land on 32nd item in track
+
+      // Construct strip with targetDish at targetSlot
+      const newItems: Dish[] = [];
+      while (newItems.length < 45) {
+        newItems.push(...candidates);
       }
-    };
+      newItems[targetSlot] = targetDish;
+      setReelItems(newItems);
+      setWinnerIndex(targetSlot);
+      setWinningDish(null);
 
-    updateWidth();
-    window.addEventListener("resize", updateWidth);
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
+      // Random jitter ±18px so it doesn't land at the exact same millimeter every spin
+      const jitter = (Math.random() - 0.5) * 36;
+      const startX = positionRef.current;
+      const endX = viewportWidth / 2 - (targetSlot * step + cardWidth / 2) + jitter;
 
-  const cardWidth = 250; // px per card
-  const cardGap = 16; // px between cards
-  const step = cardWidth + cardGap;
-  const targetIndex = 14; // fixed landing slot in expanded pool
+      const duration = 5200; // 5.2s authentic CS:GO duration
+      const startTime = performance.now();
+      let lastCellIndex = Math.floor((-startX + viewportWidth / 2) / step);
 
-  // Construct a long sequence of items with selectedDish at targetIndex
-  const reelItems = useMemo(() => {
-    if (candidates.length === 0) return [];
-    // Repeat candidate pool to fill at least 25 items
-    const pool: typeof candidates = [];
-    while (pool.length < 25) {
-      pool.push(...candidates);
+      const animate = (currentTime: number) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(1, elapsed / duration);
+
+        // CS:GO exponential friction curve: 1 - (1 - p)^3.2
+        const ease = 1 - Math.pow(1 - progress, 3.2);
+        const currentX = startX + (endX - startX) * ease;
+        positionRef.current = currentX;
+
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translate3d(${currentX}px, 0, 0)`;
+        }
+
+        // Play tick sound when card crosses the center laser line
+        const currentCell = Math.floor((-currentX + viewportWidth / 2) / step);
+        if (currentCell !== lastCellIndex) {
+          if (soundEnabled) {
+            sounds.playTick();
+          }
+          lastCellIndex = currentCell;
+        }
+
+        if (progress < 1) {
+          animFrameRef.current = requestAnimationFrame(animate);
+        } else {
+          // Finished spin
+          setWinningDish(targetDish);
+          if (soundEnabled) {
+            sounds.playWin();
+          }
+          if (onSelectDish) {
+            onSelectDish(targetDish);
+          }
+        }
+      };
+
+      cancelAnimationFrame(animFrameRef.current);
+      animFrameRef.current = requestAnimationFrame(animate);
+    },
+    [candidates, reelItems.length, step, cardWidth, soundEnabled, onSelectDish]
+  );
+
+  // Trigger spin when isSpinning flips to true
+  useEffect(() => {
+    if (isSpinning && selectedDish) {
+      runSpin(selectedDish);
     }
-    const items = pool.slice(0, 25);
+    return () => cancelAnimationFrame(animFrameRef.current);
+  }, [isSpinning, selectedDish, runSpin]);
 
-    if (selectedDish) {
-      items[targetIndex] = selectedDish;
+  // Initial positioning to center first cards
+  useEffect(() => {
+    if (!isSpinning && containerRef.current && trackRef.current && positionRef.current === -300) {
+      const w = containerRef.current.clientWidth;
+      const centerPos = w / 2 - (2 * step + cardWidth / 2);
+      positionRef.current = centerPos;
+      trackRef.current.style.transform = `translate3d(${centerPos}px, 0, 0)`;
     }
-    return items;
-  }, [candidates, selectedDish]);
-
-  // Center the target card exactly in the viewport
-  const targetX = useMemo(() => {
-    const cardCenter = targetIndex * step + cardWidth / 2;
-    return containerWidth / 2 - cardCenter;
-  }, [containerWidth, targetIndex, step, cardWidth]);
-
-  // Idle position: center the first card or selected card
-  const idleX = useMemo(() => {
-    if (selectedDish) {
-      return targetX;
-    }
-    const firstCardCenter = 0 * step + cardWidth / 2;
-    return containerWidth / 2 - firstCardCenter;
-  }, [selectedDish, targetX, step, cardWidth, containerWidth]);
+  }, [isSpinning, step, cardWidth]);
 
   return (
     <div
-      ref={containerRef}
-      className={`relative flex w-full max-w-5xl flex-col items-center justify-center overflow-hidden rounded-3xl border-2 border-stone-200/90 bg-stone-100/70 p-4 py-8 shadow-inner dark:border-stone-800/90 dark:bg-stone-900/60 ${
+      className={`relative w-full max-w-6xl mx-auto select-none ${
         className || ""
       }`}
     >
-      {/* Top Center Indicator Pointer */}
-      <div className="z-20 mb-2 flex items-center gap-1.5 rounded-full bg-orange-600 px-3 py-0.5 text-[11px] font-bold text-white shadow-md">
-        <Sparkles className="h-3 w-3" />
-        <span>Ô TRÚNG THƯỞNG</span>
-      </div>
+      {/* Sleek Single CS:GO Style Case Panel — NO DUPLICATE BORDERS */}
+      <div className="relative overflow-hidden rounded-2xl border border-stone-800 bg-[#16181d] shadow-2xl">
+        {/* Header bar of Case */}
+        <div className="flex items-center justify-between border-b border-stone-800/90 bg-[#121317] px-4 py-2.5 sm:px-6">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-amber-400" aria-hidden="true" />
+            <span className="text-xs font-bold tracking-wider text-stone-200 uppercase">
+              Băng Chuyền Lựa Chọn — Tùy Là Được
+            </span>
+            <span className="hidden sm:inline-block rounded-md bg-amber-500/10 px-2 py-0.5 text-[10px] font-semibold text-amber-400 border border-amber-500/20">
+              CS:GO Reel
+            </span>
+          </div>
 
-      {/* Viewport Frame with Gradient Edge Overlays */}
-      <div className="relative h-[340px] w-full overflow-hidden">
-        {/* Left & Right Shadow Vignettes */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 sm:w-28 bg-gradient-to-r from-stone-100/95 dark:from-stone-900/95 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 sm:w-28 bg-gradient-to-l from-stone-100/95 dark:from-stone-900/95 to-transparent" />
+          <button
+            type="button"
+            onClick={() => setSoundEnabled(!soundEnabled)}
+            aria-label={soundEnabled ? "Tắt âm thanh hiệu ứng" : "Bật âm thanh hiệu ứng"}
+            className="flex items-center gap-1.5 rounded-lg border border-stone-800 bg-stone-900/80 px-2.5 py-1 text-[11px] font-medium text-stone-400 hover:text-stone-200 transition-colors focus-visible:outline-2 focus-visible:outline-amber-500"
+          >
+            {soundEnabled ? (
+              <>
+                <Volume2 className="h-3.5 w-3.5 text-amber-400" />
+                <span>Âm thanh</span>
+              </>
+            ) : (
+              <>
+                <VolumeX className="h-3.5 w-3.5" />
+                <span>Tắt tiếng</span>
+              </>
+            )}
+          </button>
+        </div>
 
-        {/* Center Target Box Highlight Frame */}
-        <div
-          className="pointer-events-none absolute top-1/2 left-1/2 z-20 h-[320px] -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 border-orange-500 bg-orange-500/5 shadow-[0_0_25px_rgba(234,88,12,0.25)]"
-          style={{ width: `${cardWidth + 12}px` }}
-        />
+        {/* Viewport Strip */}
+        <div ref={containerRef} className="relative h-[255px] w-full overflow-hidden bg-[#16181d]">
+          {/* Laser Pointer Center Needle with top and bottom arrows */}
+          <div className="pointer-events-none absolute inset-y-0 left-1/2 z-30 w-[2px] -translate-x-1/2 bg-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.8)]">
+            {/* Top Pointer Arrow */}
+            <div
+              className="absolute -left-[6px] top-0 h-3 w-[14px] bg-amber-400"
+              style={{ clipPath: "polygon(0 0, 100% 0, 50% 100%)" }}
+            />
+            {/* Bottom Pointer Arrow */}
+            <div
+              className="absolute -left-[6px] bottom-0 h-3 w-[14px] bg-amber-400"
+              style={{ clipPath: "polygon(50% 0, 0 100%, 100% 100%)" }}
+            />
+          </div>
 
-        {/* Scrolling Strip */}
-        <motion.div
-          className="flex items-center h-full absolute top-0 left-0"
-          animate={{
-            x: isSpinning
-              ? [idleX, idleX + 300, targetX - 2500, targetX]
-              : selectedDish
-              ? targetX
-              : idleX,
-          }}
-          transition={{
-            duration: isSpinning ? 2.3 : 0.4,
-            ease: [0.12, 0.9, 0.22, 1], // natural slot reel deceleration
-          }}
-          style={{ gap: `${cardGap}px` }}
-        >
-          {reelItems.map((dish, idx) => {
-            const isTarget = selectedDish && idx === targetIndex;
-            return (
-              <div
-                key={`${dish.id}-${idx}`}
-                className={`relative flex h-[310px] flex-col overflow-hidden rounded-2xl border bg-white shadow-md transition-all shrink-0 select-none dark:bg-stone-900 ${
-                  isTarget
-                    ? "border-orange-500 ring-2 ring-orange-400/50 shadow-lg"
-                    : "border-stone-200 dark:border-stone-800 opacity-90"
-                }`}
-                style={{ width: `${cardWidth}px` }}
-              >
-                {/* Card Image */}
-                <div className="relative h-40 w-full overflow-hidden bg-stone-100 dark:bg-stone-800">
-                  {dish.imageUrl ? (
-                    <Image
-                      src={dish.imageUrl}
-                      alt={dish.name}
-                      fill
-                      sizes="250px"
-                      className="object-cover"
+          {/* Left Dark Vignette Fade */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-24 sm:w-40 bg-gradient-to-r from-[#16181d] via-[#16181d]/85 to-transparent" />
+
+          {/* Right Dark Vignette Fade */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-24 sm:w-40 bg-gradient-to-l from-[#16181d] via-[#16181d]/85 to-transparent" />
+
+          {/* Running Track */}
+          <div
+            ref={trackRef}
+            className="flex items-center h-full absolute top-0 left-0 will-change-transform py-3"
+            style={{ gap: `${cardGap}px` }}
+          >
+            {reelItems.map((dish, idx) => {
+              const isWinnerLanded =
+                !isSpinning && winningDish && idx === winnerIndex;
+              const rarityColor = RARITY_COLORS[dish.rarity] || "#10b981";
+
+              return (
+                <div
+                  key={`${dish.id}-${idx}`}
+                  className={`group relative flex h-[218px] flex-col overflow-hidden rounded-xl bg-[#20232a] transition-all duration-300 shrink-0 select-none ${
+                    isWinnerLanded
+                      ? "ring-2 ring-amber-400 scale-[1.03] shadow-[0_0_24px_rgba(251,191,36,0.4)] z-10"
+                      : "opacity-95 hover:opacity-100"
+                  }`}
+                  style={{
+                    width: `${cardWidth}px`,
+                    borderBottom: `4px solid ${rarityColor}`,
+                  }}
+                >
+                  {/* Dish Image */}
+                  <div className="relative h-[142px] w-full overflow-hidden bg-[#15171c]">
+                    {dish.imageUrl ? (
+                      <Image
+                        src={dish.imageUrl}
+                        alt={dish.name}
+                        fill
+                        sizes="210px"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-[#1e2127] text-stone-600">
+                        <Utensils className="h-8 w-8 opacity-30" />
+                      </div>
+                    )}
+
+                    {/* Subtle Rarity Gradient glow from bottom of image */}
+                    <div
+                      className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t to-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(to top, ${rarityColor}22, transparent)`,
+                      }}
                     />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-orange-50 text-orange-400 dark:bg-stone-800">
-                      <Utensils className="h-8 w-8 opacity-40" />
-                    </div>
-                  )}
-                  <div className="absolute top-2.5 right-2.5 z-10">
-                    <RarityBadge rarity={dish.rarity} />
-                  </div>
-                </div>
 
-                {/* Card Details */}
-                <div className="flex flex-1 flex-col justify-between p-3.5 text-left">
-                  <div>
-                    <h4 className="truncate text-sm font-bold text-stone-900 dark:text-stone-100">
-                      {dish.name}
-                    </h4>
-                    <p className="mt-0.5 truncate text-[11px] text-stone-500 dark:text-stone-400">
-                      {dish.subtitle || "Món ngon trưa nay"}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-between border-t border-stone-100 pt-2 dark:border-stone-800">
-                    <span className="text-xs font-black text-orange-600 dark:text-orange-400">
-                      {formatVND(dish.price)}
-                    </span>
-                    <a
-                      href={`https://www.google.com/maps/search/${encodeURIComponent(
-                        dish.name + " gần đây"
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-lg bg-stone-50 p-1.5 text-stone-500 hover:text-orange-600 dark:bg-stone-800"
-                      title="Tìm quán"
+                    {/* Top Rarity Label */}
+                    <div className="absolute top-2 left-2 rounded-md bg-black/60 px-2 py-0.5 text-[9px] font-extrabold tracking-wider uppercase backdrop-blur-xs"
+                      style={{ color: rarityColor }}
                     >
-                      <MapPin className="h-3.5 w-3.5" />
-                    </a>
+                      {dish.rarity.replace("_", " ")}
+                    </div>
+                  </div>
+
+                  {/* Dish Copy */}
+                  <div className="flex flex-1 flex-col justify-between p-3 text-left bg-gradient-to-b from-[#20232a] to-[#191b21]">
+                    <div className="flex flex-col">
+                      <span className="truncate text-xs font-bold text-stone-100">
+                        {dish.name}
+                      </span>
+                      <span className="truncate text-[10px] text-stone-400">
+                        {dish.subtitle || "Món ngon trưa nay"}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1 border-t border-stone-800/80">
+                      <span
+                        className="text-xs font-extrabold"
+                        style={{ color: rarityColor }}
+                      >
+                        {dish.price > 0 ? formatVND(dish.price) : "Miễn phí"}
+                      </span>
+                      <span className="text-[10px] text-stone-400 font-medium">
+                        Quyết định
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </motion.div>
+              );
+            })}
+          </div>
+        </div>
       </div>
-
-      <span className="mt-3 text-[11px] text-stone-500 dark:text-stone-400">
-        Bấm nút quay để băng chuyền lướt và dừng chuẩn xác tại món trưa của bạn
-      </span>
     </div>
   );
 }

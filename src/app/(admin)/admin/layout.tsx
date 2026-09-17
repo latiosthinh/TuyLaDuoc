@@ -6,7 +6,7 @@ import {
   LayoutDashboard,
   Utensils,
   FolderTree,
-  Sparkles,
+  ScrollText,
   Settings,
   LogOut,
   ExternalLink,
@@ -29,10 +29,10 @@ export default async function AdminLayout({
         <aside className="fixed inset-y-0 left-0 z-30 flex w-60 flex-col border-r border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900">
           <div className="flex h-14 items-center gap-2 border-b border-stone-200 px-6 dark:border-stone-800">
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-orange-600 text-white font-bold text-xs">
-              AD
+              TL
             </div>
             <span className="text-sm font-extrabold tracking-tight text-stone-900 dark:text-stone-100">
-              Trưa Nay Ăn Gì
+              Tùy Là Được Admin
             </span>
           </div>
 
@@ -50,7 +50,7 @@ export default async function AdminLayout({
               className="flex items-center gap-2.5 rounded-xl px-3 py-2 transition-colors hover:bg-stone-100 hover:text-orange-600 dark:hover:bg-stone-800"
             >
               <Utensils className="h-4 w-4" />
-              <span>Quản lý món ăn</span>
+              <span>Quản lý danh mục & mục</span>
             </Link>
 
             <Link
@@ -65,7 +65,7 @@ export default async function AdminLayout({
               href="/admin/fortunes"
               className="flex items-center gap-2.5 rounded-xl px-3 py-2 transition-colors hover:bg-stone-100 hover:text-orange-600 dark:hover:bg-stone-800"
             >
-              <Sparkles className="h-4 w-4" />
+              <ScrollText className="h-4 w-4" />
               <span>Quẻ trưa</span>
             </Link>
 

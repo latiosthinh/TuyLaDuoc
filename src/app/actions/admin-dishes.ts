@@ -16,6 +16,7 @@ export async function createOrUpdateDish(formData: FormData) {
   const price = parseInt(formData.get("price") as string, 10) || 50000;
   const categoryId = formData.get("categoryId") as string;
   const rarity = (formData.get("rarity") as any) || "QUOC_DAN";
+  const domain = (formData.get("domain") as string) || "food";
   const imageUrl = formData.get("imageUrl") as string;
   const isActive = formData.get("isActive") === "on";
 
@@ -27,6 +28,7 @@ export async function createOrUpdateDish(formData: FormData) {
       subtitle,
       price,
       categoryId,
+      domain,
       rarity,
       imageUrl: imageUrl || null,
       isActive,
@@ -39,6 +41,7 @@ export async function createOrUpdateDish(formData: FormData) {
         subtitle,
         price,
         categoryId,
+        domain,
         rarity,
         imageUrl: imageUrl || null,
         isActive,
@@ -81,6 +84,7 @@ export async function createOrUpdateCategory(formData: FormData) {
   const id = formData.get("id") as string;
   const name = formData.get("name") as string;
   const tab = (formData.get("tab") as any) || "mon_chinh";
+  const domain = (formData.get("domain") as string) || "food";
   const sortOrder = parseInt(formData.get("sortOrder") as string, 10) || 0;
 
   await db
@@ -89,11 +93,12 @@ export async function createOrUpdateCategory(formData: FormData) {
       id,
       name,
       tab,
+      domain,
       sortOrder,
     })
     .onConflictDoUpdate({
       target: categories.id,
-      set: { name, tab, sortOrder },
+      set: { name, tab, domain, sortOrder },
     });
 
   revalidatePath("/");

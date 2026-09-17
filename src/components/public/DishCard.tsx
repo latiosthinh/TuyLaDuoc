@@ -58,12 +58,12 @@ export function DishCard({
             {dish.name}
           </h3>
           <span className="text-sm font-extrabold text-orange-600 dark:text-orange-400">
-            {formatVND(dish.price)}
+            {dish.price > 0 ? formatVND(dish.price) : "Miễn phí"}
           </span>
         </div>
 
         {dish.subtitle && (
-          <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-500 dark:text-stone-400">
+          <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-600 dark:text-stone-300">
             {dish.subtitle}
           </p>
         )}
@@ -74,20 +74,22 @@ export function DishCard({
               <button
                 type="button"
                 onClick={onRespin}
-                className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-orange-700 hover:shadow-md active:scale-98"
+                aria-label="Quay lựa chọn khác"
+                className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-orange-600 px-4 py-2.5 text-xs font-semibold text-white shadow-sm transition-all hover:bg-orange-700 hover:shadow-md active:scale-98 focus-visible:outline-2 focus-visible:outline-orange-500"
               >
-                <RefreshCw className="h-3.5 w-3.5" />
-                <span>Quay món khác</span>
+                <RefreshCw className="h-3.5 w-3.5" aria-hidden="true" />
+                <span>Quay lựa chọn khác</span>
               </button>
             )}
             <a
               href={mapsSearchUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-xs font-medium text-stone-700 transition-colors hover:border-orange-300 hover:text-orange-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200 dark:hover:border-orange-800 dark:hover:text-orange-400"
+              aria-label={`Tìm kiếm thông tin hoặc địa điểm ${dish.name} (mở tab mới)`}
+              className="flex items-center justify-center gap-1.5 rounded-xl border border-stone-200 bg-stone-50 px-3.5 py-2.5 text-xs font-medium text-stone-700 transition-colors hover:border-orange-300 hover:text-orange-600 focus-visible:outline-2 focus-visible:outline-orange-500 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200 dark:hover:border-orange-800 dark:hover:text-orange-400"
             >
-              <MapPin className="h-3.5 w-3.5 text-orange-500" />
-              <span>Tìm quán</span>
+              <MapPin className="h-3.5 w-3.5 text-orange-500" aria-hidden="true" />
+              <span>Khám phá</span>
             </a>
           </div>
         )}

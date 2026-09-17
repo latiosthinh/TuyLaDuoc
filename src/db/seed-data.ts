@@ -1,7 +1,8 @@
 export interface SeedCategory {
   id: string;
   name: string;
-  tab: "mon_chinh" | "do_uong" | "an_vat" | "mon_nhau";
+  tab: "mon_chinh" | "do_uong" | "an_vat" | "mon_nhau" | "giai_tri" | "hoat_dong" | "cong_viec";
+  domain?: "food" | "entertainment" | "activity" | "task";
   sortOrder: number;
 }
 
@@ -11,6 +12,7 @@ export interface SeedDish {
   subtitle: string;
   price: number;
   categoryId: string;
+  domain?: "food" | "entertainment" | "activity" | "task";
   rarity: "QUOC_DAN" | "HIEM" | "CUC_PHAM" | "TOI_MAT" | "DAC_BIET";
   imageUrl?: string;
   dietTags: string[];
@@ -24,16 +26,29 @@ export interface SeedFortune {
 }
 
 export const SEED_CATEGORIES: SeedCategory[] = [
-  { id: "bun-pho-mi", name: "Bún, phở & mì", tab: "mon_chinh", sortOrder: 1 },
-  { id: "com-xoi", name: "Cơm & xôi", tab: "mon_chinh", sortOrder: 2 },
-  { id: "banh-mi-cuon", name: "Bánh mì & cuốn", tab: "mon_chinh", sortOrder: 3 },
-  { id: "nuong-chien", name: "Nướng & chiên", tab: "mon_chinh", sortOrder: 4 },
-  { id: "pizza-pasta", name: "Pizza & pasta", tab: "mon_chinh", sortOrder: 5 },
-  { id: "salad-mon-nhe", name: "Salad & món nhẹ", tab: "mon_chinh", sortOrder: 6 },
-  { id: "chay", name: "Món chay thanh đạm", tab: "mon_chinh", sortOrder: 7 },
-  { id: "do-uong", name: "Đồ uống & Trà sữa", tab: "do_uong", sortOrder: 8 },
-  { id: "an-vat", name: "Ăn vặt & Tráng miệng", tab: "an_vat", sortOrder: 9 },
-  { id: "mon-nhau", name: "Món nhậu lai rai", tab: "mon_nhau", sortOrder: 10 },
+  // Ăn uống
+  { id: "bun-pho-mi", name: "Bún, phở & mì", tab: "mon_chinh", domain: "food", sortOrder: 1 },
+  { id: "com-xoi", name: "Cơm & xôi", tab: "mon_chinh", domain: "food", sortOrder: 2 },
+  { id: "banh-mi-cuon", name: "Bánh mì & cuốn", tab: "mon_chinh", domain: "food", sortOrder: 3 },
+  { id: "nuong-chien", name: "Nướng & chiên", tab: "mon_chinh", domain: "food", sortOrder: 4 },
+  { id: "pizza-pasta", name: "Pizza & pasta", tab: "mon_chinh", domain: "food", sortOrder: 5 },
+  { id: "salad-mon-nhe", name: "Salad & món nhẹ", tab: "mon_chinh", domain: "food", sortOrder: 6 },
+  { id: "chay", name: "Món chay thanh đạm", tab: "mon_chinh", domain: "food", sortOrder: 7 },
+  { id: "do-uong", name: "Đồ uống & Trà sữa", tab: "do_uong", domain: "food", sortOrder: 8 },
+  { id: "an-vat", name: "Ăn vặt & Tráng miệng", tab: "an_vat", domain: "food", sortOrder: 9 },
+  { id: "mon-nhau", name: "Món nhậu lai rai", tab: "mon_nhau", domain: "food", sortOrder: 10 },
+  // Giải trí
+  { id: "phim-anh", name: "Phim ảnh & Netflix", tab: "giai_tri", domain: "entertainment", sortOrder: 11 },
+  { id: "game-boardgame", name: "Game & Boardgame", tab: "giai_tri", domain: "entertainment", sortOrder: 12 },
+  { id: "nghe-nhac-podcast", name: "Nhạc & Podcast", tab: "giai_tri", domain: "entertainment", sortOrder: 13 },
+  // Hoạt động
+  { id: "dao-pho-ca-phe", name: "Cà phê & Dạo phố", tab: "hoat_dong", domain: "activity", sortOrder: 14 },
+  { id: "the-thao-van-dong", name: "Thể thao & Vận động", tab: "hoat_dong", domain: "activity", sortOrder: 15 },
+  { id: "kham-pha-da-ngoai", name: "Bảo tàng & Dã ngoại", tab: "hoat_dong", domain: "activity", sortOrder: 16 },
+  // Việc cần làm
+  { id: "hoc-tap-phat-trien", name: "Học tập & Kỹ năng", tab: "cong_viec", domain: "task", sortOrder: 17 },
+  { id: "don-dep-nha-cua", name: "Dọn dẹp & Nhà cửa", tab: "cong_viec", domain: "task", sortOrder: 18 },
+  { id: "cham-soc-suc-khoe", name: "Sức khỏe & Chăm sóc", tab: "cong_viec", domain: "task", sortOrder: 19 },
 ];
 
 export const SEED_DISHES: SeedDish[] = [
@@ -444,6 +459,172 @@ export const SEED_DISHES: SeedDish[] = [
     categoryId: "mon-nhau",
     rarity: "TOI_MAT",
     imageUrl: "https://images.unsplash.com/photo-1544025162-d76694265947?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Giải trí: Phim ảnh & Cinema
+  {
+    id: "xem-phim-rap-imax",
+    name: "Đi xem phim rạp",
+    subtitle: "Thưởng thức bom tấn mới nhất với bắp rang bơ",
+    price: 120000,
+    categoryId: "phim-anh",
+    domain: "entertainment",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "cay-phim-netflix",
+    name: "Cày phim Netflix / Anime",
+    subtitle: "Nằm dài sofa xem trọn 1 bộ phim yêu thích",
+    price: 0,
+    categoryId: "phim-anh",
+    domain: "entertainment",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  // Giải trí: Game & Boardgame
+  {
+    id: "quay-boardgame-ban-be",
+    name: "Chơi Boardgame cùng hội bạn",
+    subtitle: "Ma Sói, Mèo Nổ, Catan hoặc Carcassonne",
+    price: 50000,
+    categoryId: "game-boardgame",
+    domain: "entertainment",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "choi-game-console-pc",
+    name: "Chiến 1 ván Game PC/Console",
+    subtitle: "Thư giãn 1-2 trận cùng chiến hữu",
+    price: 0,
+    categoryId: "game-boardgame",
+    domain: "entertainment",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  // Giải trí: Nhạc & Podcast
+  {
+    id: "nghe-podcast-chua-lanh",
+    name: "Nghe 1 tập Podcast chữa lành",
+    subtitle: "Mở podcast yêu thích, pha trà ấm và lắng nghe",
+    price: 0,
+    categoryId: "nghe-nhac-podcast",
+    domain: "entertainment",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Hoạt động: Cà phê & Dạo phố
+  {
+    id: "di-ca-phe-view-dep",
+    name: "Đi cà phê góc phố quen",
+    subtitle: "Ngồi ngắm đường phố, đọc sách hoặc làm việc",
+    price: 45000,
+    categoryId: "dao-pho-ca-phe",
+    domain: "activity",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "dao-pho-hong-gio",
+    name: "Đi dạo hóng gió công viên",
+    subtitle: "Đi bộ 5000 bước hít thở không khí trong lành",
+    price: 0,
+    categoryId: "dao-pho-ca-phe",
+    domain: "activity",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  // Hoạt động: Thể thao & Vận động
+  {
+    id: "tap-gym-chay-bo",
+    name: "Tập gym hoặc chạy bộ 30 phút",
+    subtitle: "Đốt năng lượng, nâng cao sức khỏe",
+    price: 0,
+    categoryId: "the-thao-van-dong",
+    domain: "activity",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "dap-xe-da-ngoai",
+    name: "Đạp xe ngắm hoàng hôn",
+    subtitle: "Lượn một vòng hồ hoặc cung đường rợp bóng cây",
+    price: 30000,
+    categoryId: "the-thao-van-dong",
+    domain: "activity",
+    rarity: "CUC_PHAM",
+    imageUrl: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  // Hoạt động: Bảo tàng & Dã ngoại
+  {
+    id: "tham-quan-bao-tang",
+    name: "Đi bảo tàng / Triển lãm nghệ thuật",
+    subtitle: "Khám phá không gian văn hóa & sáng tạo mới",
+    price: 40000,
+    categoryId: "kham-pha-da-ngoai",
+    domain: "activity",
+    rarity: "TOI_MAT",
+    imageUrl: "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+
+  // Việc cần làm: Học tập & Kỹ năng
+  {
+    id: "doc-sach-30-phut",
+    name: "Đọc sách 30 trang",
+    subtitle: "Tập trung tiếp thu kiến thức mới không điện thoại",
+    price: 0,
+    categoryId: "hoc-tap-phat-trien",
+    domain: "task",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  {
+    id: "hoc-ngoai-ngu-bai-moi",
+    name: "Học ngoại ngữ 20 phút",
+    subtitle: "Luyện Duolingo, flashcard từ vựng hoặc Shadowing",
+    price: 0,
+    categoryId: "hoc-tap-phat-trien",
+    domain: "task",
+    rarity: "HIEM",
+    imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  // Việc cần làm: Dọn dẹp & Nhà cửa
+  {
+    id: "don-dep-ban-lam-viec",
+    name: "Dọn dẹp bàn làm việc & phòng ngủ",
+    subtitle: "Bỏ đồ không dùng, lau bàn gọn gàng đón năng lượng mới",
+    price: 0,
+    categoryId: "don-dep-nha-cua",
+    domain: "task",
+    rarity: "QUOC_DAN",
+    imageUrl: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&auto=format&fit=crop&q=80",
+    dietTags: [],
+  },
+  // Việc cần làm: Sức khỏe & Chăm sóc
+  {
+    id: "uong-nuoc-ngu-som",
+    name: "Đi ngủ trước 23h & detox",
+    subtitle: "Nghỉ ngơi đúng giờ, phục hồi cơ thể trọn vẹn",
+    price: 0,
+    categoryId: "cham-soc-suc-khoe",
+    domain: "task",
+    rarity: "DAC_BIET",
+    imageUrl: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=600&auto=format&fit=crop&q=80",
     dietTags: [],
   },
 ];
