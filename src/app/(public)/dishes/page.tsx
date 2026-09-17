@@ -1,7 +1,5 @@
-import { db } from "@/db";
-import { dishes, categories } from "@/db/schema";
+import { getActiveDishes, getActiveCategories } from "@/lib/data";
 import { DishesCatalog } from "@/components/public/DishesCatalog";
-import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,15 +11,10 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function DishesPage() {
-  const allDishes = await db
-    .select()
-    .from(dishes)
-    .where(eq(dishes.isActive, true));
-
-  const allCategories = await db
-    .select()
-    .from(categories)
-    .orderBy(categories.sortOrder);
+  const [allDishes, allCategories] = await Promise.all([
+    getActiveDishes(),
+    getActiveCategories(),
+  ]);
 
   return (
     <div className="flex flex-col gap-6">

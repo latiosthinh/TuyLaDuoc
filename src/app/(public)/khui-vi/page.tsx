@@ -1,8 +1,6 @@
-import { db } from "@/db";
-import { dishes } from "@/db/schema";
+import { getActiveDishes } from "@/lib/data";
 import { DishCard } from "@/components/public/DishCard";
 import { Sparkles, Gift } from "lucide-react";
-import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,10 +11,7 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function KhuiViPage() {
-  const allDishes = await db
-    .select()
-    .from(dishes)
-    .where(eq(dishes.isActive, true));
+  const allDishes = await getActiveDishes();
 
   // Select a rare or secret dish
   const mysteryDish =

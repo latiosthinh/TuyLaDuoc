@@ -1,23 +1,15 @@
-import { db } from "@/db";
-import { dishes, categories } from "@/db/schema";
+import { getActiveDishes, getActiveCategories } from "@/lib/data";
 import { getGlobalSpinCount } from "@/app/actions/spin";
 import { SpinEngine } from "@/components/public/SpinEngine";
-import { eq } from "drizzle-orm";
 
 export const revalidate = 60; // cached for visitors
 
 export default async function HomePage() {
-  const allDishes = await db
-    .select()
-    .from(dishes)
-    .where(eq(dishes.isActive, true));
-
-  const allCategories = await db
-    .select()
-    .from(categories)
-    .orderBy(categories.sortOrder);
-
-  const initialSpinCount = await getGlobalSpinCount();
+  const [allDishes, allCategories, initialSpinCount] = await Promise.all([
+    getActiveDishes(),
+    getActiveCategories(),
+    getGlobalSpinCount(),
+  ]);
 
   return (
     <div className="flex flex-col items-center justify-center text-center">

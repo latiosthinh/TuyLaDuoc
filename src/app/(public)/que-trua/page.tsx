@@ -1,7 +1,5 @@
-import { db } from "@/db";
-import { fortunes, dishes, categories } from "@/db/schema";
+import { getActiveFortunes, getActiveDishes, getActiveCategories } from "@/lib/data";
 import { FortuneSlip } from "@/components/public/FortuneSlip";
-import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,20 +11,11 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function QueTruaPage() {
-  const allFortunes = await db
-    .select()
-    .from(fortunes)
-    .where(eq(fortunes.isActive, true));
-
-  const allDishes = await db
-    .select()
-    .from(dishes)
-    .where(eq(dishes.isActive, true));
-
-  const allCategories = await db
-    .select()
-    .from(categories)
-    .orderBy(categories.sortOrder);
+  const [allFortunes, allDishes, allCategories] = await Promise.all([
+    getActiveFortunes(),
+    getActiveDishes(),
+    getActiveCategories(),
+  ]);
 
   return (
     <div className="flex flex-col items-center justify-center text-center">

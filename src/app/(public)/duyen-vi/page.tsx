@@ -1,8 +1,6 @@
-import { db } from "@/db";
-import { dishes } from "@/db/schema";
+import { getActiveDishes } from "@/lib/data";
 import { DishCard } from "@/components/public/DishCard";
 import { Sparkles, HeartHandshake } from "lucide-react";
-import { eq } from "drizzle-orm";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,10 +11,7 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function DuyenViPage() {
-  const allDishes = await db
-    .select()
-    .from(dishes)
-    .where(eq(dishes.isActive, true));
+  const allDishes = await getActiveDishes();
 
   // Pick two complementary dishes (e.g. main + drink or main + snack)
   const mainDish = allDishes.find((d) => d.categoryId === "com-xoi") || allDishes[0];
